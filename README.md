@@ -48,3 +48,74 @@ Aby temu zapobiec należy stworzyć plik `.prettierrc.json` i dodać do niego js
 ```
 
 Przydatne info na temat konfigurowania nie tylko pretiera https://dev.to/suchintan/reacttypescripteslint-prettier-full-setup-p7j
+
+
+## Błąd Type '{}' is not assignable to type 'ReactNode'
+Błąd występuje w dziwny sposób jeżeli chcemy się bawić w bardziej skomplikowane struktury danych jak na przykład `kolekcje obiektów` to po stworzeniu typu oraz interfejsu obsługującego typ poprzednio zapisany. Próba iteracji po kolekcji może się zakończyć błędem, że nasz typ nie jest możliwy do przypisania do ReactNode. Aby naprawić taki błąd należy tak naprawdę sprawdzić czy poprawnie przypisujemy typy danych, ponieważ gdy taki błąd występuje to bardzo możliwe, że błędem po naszej stronie jest zła próba przypisania zwracanej wartości przez kolkcję. Dobrym przykładem może być komponent tworzący dynamicznie listę:
+
+```JSX
+type skillInfo = {
+  skill: string;
+}
+
+interface SkillsProps extends LiHTMLAttributes<HTMLLIElement>{
+  skillList: skillInfo[];
+  children?: React.ReactNode | undefined;
+}
+
+export const SkillList = (props: SkillsProps) => {
+  return (
+    <ul>
+      {props.skillList.map((skill) => {
+        return <li>{skill.skill}</li>; // Poprawna próba odczytania właściwości obiektu
+      })}
+    </ul>
+  );
+};
+```
+Jeżeli spróbujemy odczytać obiekt następująco czyli nie wskazując właściwości z przypisaną wartością, to zostanie mam zwrócony błąd Type '{}' is not assignable to type 'ReactNode'
+```JSX
+export const SkillList = (props: SkillsProps) => {
+  return (
+    <ul>
+      {props.skillList.map((skill) => {
+        return <li>{skill}</li>; // Nie poprawna próba odczytania właściwości obiektu
+      })}
+    </ul>
+  );
+};
+```
+Można taki błąd również zamknąć w stringu który nie będzie zwracać nam takich błedów. Ale w takim wypadku zostanie zwrócona nam wartość tablicy `[object object]`
+
+```JSX
+export const SkillList = (props: SkillsProps) => {
+  return (
+    <ul>
+      {props.skillList.map((skill) => {
+        return <li>{`${skill}`}</li>; // Nie poprawna próba odczytania właściwości obiektu za pomocą rzutowania na string
+      })}
+    </ul>
+  );
+};
+```
+
+
+### Pozostałe triki jak można spróbować rozwiązać taki błąd
+
+```JSON
+"@types/react": "^18.2.79",
+"@types/react-dom": "^18.2.25"
+```
+Jeżeli posiadamy taki wpis jak powyżej, to musimy usunąć znak karetki `^` przed wersją. Jeżeli bowiem to nie zadziała należy zmienić wersję na 
+
+```JSON
+"resolutions": {
+  "@types/react": "17.0.2",
+  "@types/react-dom": "17.0.2"
+},
+```
+I spóbować postawić na nowo projekt za pomocą `npm install` możemy później spróbować wrócić do wersji 
+```JSON
+"@types/react": "18.2.79",
+"@types/react-dom": "18.2.25"
+```
