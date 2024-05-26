@@ -25,7 +25,27 @@ Stylizacja komponentu inline w react.js jest trochę nie intuicyjna na samym poc
 
 Dłuższe nazwy zostały zmienione, na przykład **font-size** został przemieniony na nazwę wykorzystującą camelCase **fontSize** i to się tyczy każdej nazwy która wcześniej była oddzielana za pomocą myślnika
 
+## Renderowanie dynamicznego komponentu
+
+Aby wyrenderować dynamicznie komponent na podstawie jakieś tablicy danych, to najlepszym sposobem będzie wykorzystanie do tego metody `map` ze względu, że metoda `map` tworzy kopię tablicy, którą `React.js` potrafi obsłużyć.
+
+Wykorzystanie metody `forEach` niestety nie zadziała, ponieważ metoda `forEach` nie tworzy kopii tablicy, tylko zwraca wartości zawarte w tej tablicy.
+
+## Renderowanie komponentu warunkowego
+
+Komponenty warunkowe, to komponenty renderowane jedynie gdy jest spełniony dany warunek, jak na przykład czy tablica na której propsy od komponentu opierające się nie jest pusta.
+
+### Renderowanie warunkowe możemy osiągnąć za pomocą
+
+- Short circuit polegające na jak najszybszym zwrocie wartości bool za pomocą operatorów logicznych takich jak `AND &&` oraz `OR ||`
+- Ternary operator `? :`
+
 # Props
+
+Props - to skrót od property czyli właściwości obiektu. Prop nawet jeżeli nie jest przekazywany to zawsze istnieje, nawet jeżeli jest pusty.
+
+- Wpisanie `console.log(props)` sposowduje, że zostanie zwrócony pusty obiekt, **oczwywiście jeżeli props będzie pusty!**
+- Props zachowuję się tak samo jak obiekt w JS czyli może zostać podany modyfikacji, takim jak destrukturyzacja obiektów, ale nie można go modyfikować bezpośrednio jak na przykład usuwanie właściwości itp.
 
 ## Przekazywanie właściwości do props
 

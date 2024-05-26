@@ -14,15 +14,15 @@ export const ProfileCard = () => {
         />
         <SkillList skillList={
           [
-            {skill: 'HTML + CSS', color: 'red', emoji: '💪'}, 
-            {skill: 'JavaScript', color: '#6495ED', emoji: '💪'},
-            {skill: 'Web Design', color: '#8B008B', emoji: '💪'},
-            {skill: 'PHP', color: '#00BFFF', emoji: '👌'},
-            {skill: 'Git', color: '#B22222', emoji: '👍'},
-            {skill: 'Rect.js', color: '#00FFFF', emoji: '📚'},
-            {skill: 'TypeScipt', color: '#87CEFA', emoji: '📚'},
-            {skill: 'C++', color: '#FFD700', emoji: '🥸'},
-            {skill: 'Godot 4', color: '#008B8B', emoji: '🤖'}
+            {skill: 'HTML + CSS', color: 'red', emoji: 'advance'}, 
+            {skill: 'JavaScript', color: '#6495ED', emoji: 'advance'},
+            {skill: 'Web Design', color: '#8B008B', emoji: 'advance'},
+            {skill: 'PHP', color: '#00BFFF', emoji: 'intermidiet'},
+            {skill: 'Git', color: '#B22222', emoji: 'begginer'},
+            {skill: 'Rect.js', color: '#00FFFF', emoji: 'studing'},
+            {skill: 'TypeScipt', color: '#87CEFA', emoji: 'studing'},
+            {skill: 'C++', color: '#FFD700', emoji: 'cpp'},
+            {skill: 'Godot 4', color: '#008B8B', emoji: 'interesting'}
           ]
         }/>
       </div>

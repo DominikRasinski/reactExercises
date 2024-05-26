@@ -3,5 +3,5 @@ type AvatarProps = {
 };
 
 export const Avatar = (props: AvatarProps) => {
-  return <img className="avatar" src={props.imgPath} />;
+  return <img className='avatar' alt='avatar' src={props.imgPath} />;
 };

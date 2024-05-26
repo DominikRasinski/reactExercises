@@ -1,19 +1,25 @@
 export const Footer = () => {
   // Open from 12 am and closed on 10 pm
   const hour = new Date().getHours();
-  console.log(hour);
-  let text = "";
   const openHour = 12;
   const closeHour = 22;
 
-  if (hour >= openHour) {
-    text = "open";
-  }
-  if (hour >= closeHour || hour < openHour) {
-    text = "close";
-  }
-
+  const isOpen = hour >= openHour && hour <= closeHour;
   return (
-    <footer className="footer">{`${new Date().toLocaleTimeString()} We're currently ${text}!`}</footer>
+    <footer className='footer'>
+      {isOpen ? (
+        <div className='order'>
+          <p>
+            We're open until {`${closeHour}:00`}. Come visit us or order online.
+          </p>
+          <button className='btn'>Order</button>
+        </div>
+      ) : (
+        <p>
+          We're happy when you visit us between {`${openHour}:00`} and
+          {` ${closeHour}:00`}
+        </p>
+      )}
+    </footer>
   );
 };

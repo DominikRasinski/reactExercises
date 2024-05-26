@@ -1,3 +1,4 @@
+import { sign } from "crypto";
 import React, { LiHTMLAttributes } from "react";
 
 type skillInfo = {
@@ -15,7 +16,32 @@ export const SkillList = (props: SkillsProps) => {
   return (
     <ul className="skill-list">
       {props.skillList.map((skill) => {
-        return <li className="skill" style={{backgroundColor: skill.color}}>{`${skill.skill} ${skill.emoji}`}</li>;
+        let level = ''
+
+        switch(skill.emoji) {
+          case 'begginer':
+            level = '👍';
+            break;
+          case 'advance':
+            level = '💪';
+            break;
+          case 'intermidiet':
+            level = '👌';
+            break;
+          case 'studing':
+            level = '📚';
+            break;
+          case 'cpp':
+            level = '🥸';
+            break;
+          case 'interesting':
+            level = '🤖';
+            break;
+          default: 
+            level = '😎';
+        }
+
+        return <li className="skill" style={{backgroundColor: skill.color}}>{`${skill.skill} ${level}`}</li>;
       })}
     </ul>
   );
