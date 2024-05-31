@@ -1,18 +1,10 @@
 import { useState } from 'react';
 
 export const Counter = () => {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [count, setCount] = useState(0);
   const actualDate = new Date('june 21 2027');
   actualDate.setDate(actualDate.getDate() + count);
-
-  const handlerAddStep = () => {
-    setStep((s: number) => s + 1);
-  };
-
-  const handlerMinusStep = () => {
-    setStep((s: number) => s - 1);
-  };
 
   const handleAddCount = () => {
     setCount((c: number) => c + step);
@@ -22,30 +14,40 @@ export const Counter = () => {
     setCount((c: number) => c - step);
   };
 
+  const handleCountWithStep = (value: number) => {
+    setCount(value + step);
+  };
+
+  const handleReset = () => {
+    setCount(0);
+    setStep(0);
+  };
+
   return (
     <div className='main-container'>
       <div className='btn-counter'>
-        <button
-          className='btn'
-          onClick={handlerMinusStep}>
-          -
-        </button>
+        <input
+          type='range'
+          min={0}
+          max={10}
+          value={step}
+          onChange={(e) => setStep(Number(e.target.value))}
+        />
         <span>Step: {step}</span>
-        <button
-          className='btn'
-          onClick={handlerAddStep}>
-          +
-        </button>
       </div>
       <div className='btn-counter'>
         <button
-          className='btn'
+          className=''
           onClick={handleMinusCount}>
           -
         </button>
-        <span>Count: {count}</span>
+        <input
+          type='text'
+          onChange={(e) => handleCountWithStep(Number(e.target.value))}
+          value={count}
+        />
         <button
-          className='btn'
+          className=''
           onClick={handleAddCount}>
           +
         </button>
@@ -60,6 +62,9 @@ export const Counter = () => {
         </span>
         <span>{actualDate.toDateString()}</span>
       </p>
+      <div>
+        <button onClick={handleReset}>Reset</button>
+      </div>
     </div>
   );
 };

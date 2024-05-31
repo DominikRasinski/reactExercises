@@ -1,12 +1,19 @@
 import { useState } from 'react';
 
-export const Form = () => {
+interface FormProps {
+  onAddItems: (item: any) => void;
+}
+
+export const Form = (props: FormProps) => {
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(1);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (!description) return;
+
+    const newItem = { description, quantity, packed: false, id: Date.now() };
+    props.onAddItems(newItem);
 
     setDescription('');
     setQuantity(1);

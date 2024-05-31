@@ -1,23 +1,15 @@
-import React, { LiHTMLAttributes, ReactNode } from 'react';
-
 type ItemElement = {
-  id: number;
+  id: number | string;
   description: string;
   quantity: number;
   packed: boolean;
 };
 
-interface ItemProps extends LiHTMLAttributes<HTMLLIElement> {
-  elements: ItemElement;
-  children?: ReactNode | undefined;
-}
-
-export const Item = (props: ItemProps) => {
-  const { description, quantity, packed } = props.elements;
+export const Item = (props: ItemElement) => {
   return (
     <li>
-      <span className={packed ? 'textThrough' : ''}>
-        {description} {quantity}
+      <span className={props.packed ? 'textThrough' : ''}>
+        {props.description} {props.quantity}
       </span>
       <button>❌</button>
     </li>

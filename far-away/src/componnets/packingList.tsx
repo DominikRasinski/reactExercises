@@ -1,13 +1,20 @@
-import { initialItems } from './data';
+import { ItemsType } from '../App';
 import { Item } from './item';
 
-export const PackingList = () => {
+type PackingListProps = {
+  items: ItemsType[];
+};
+
+export const PackingList = (props: PackingListProps) => {
   return (
     <div className='list'>
       <ul>
-        {initialItems.map((item) => (
+        {props.items.map((item) => (
           <Item
-            elements={item}
+            id={item.id}
+            description={item.description}
+            packed={item.packed}
+            quantity={item.quantity}
             key={item.id}
           />
         ))}
