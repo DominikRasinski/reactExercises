@@ -1,9 +1,11 @@
-import { ItemsType } from '../App';
+import { ItemsType, unionId } from '../App';
 import { Item } from './item';
 
-type PackingListProps = {
+interface PackingListProps {
   items: ItemsType[];
-};
+  onDeletItem: (id: unionId) => void;
+  tooglePacked: (id: unionId) => void;
+}
 
 export const PackingList = (props: PackingListProps) => {
   return (
@@ -15,6 +17,8 @@ export const PackingList = (props: PackingListProps) => {
             description={item.description}
             packed={item.packed}
             quantity={item.quantity}
+            onDeletItem={props.onDeletItem}
+            tooglePacked={props.tooglePacked}
             key={item.id}
           />
         ))}

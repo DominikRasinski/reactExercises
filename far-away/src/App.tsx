@@ -5,26 +5,43 @@ import { PackingList } from './componnets/packingList';
 import { Stats } from './componnets/stats';
 
 export type ItemsType = {
+  id: number | string;
   description: string;
   quantity: number;
   packed: boolean;
-  id: number | string;
 };
+
+export type unionId = number | string;
 
 function App() {
   const [items, setItems] = useState<ItemsType[]>([]);
 
-  const handleAddItems = (item: any) => {
+  const handleAddItems = (item: ItemsType) => {
     setItems((items) => [...items, item]);
-    console.log(items);
+  };
+
+  const handleDeleteItem = (id: unionId) => {
+    setItems((items) => items.filter((item) => item.id !== id));
+  };
+
+  const handleTooglePacked = (id: unionId) => {
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
   };
 
   return (
     <div className='app'>
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} />
-      <Stats />
+      <PackingList
+        items={items}
+        onDeletItem={handleDeleteItem}
+        tooglePacked={handleTooglePacked}
+      />
+      <Stats items={items} />
     </div>
   );
 }

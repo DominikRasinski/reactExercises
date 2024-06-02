@@ -1,7 +1,8 @@
 import { useState } from 'react';
+import { ItemsType } from '../App';
 
 interface FormProps {
-  onAddItems: (item: any) => void;
+  onAddItems: (item: ItemsType) => void;
 }
 
 export const Form = (props: FormProps) => {

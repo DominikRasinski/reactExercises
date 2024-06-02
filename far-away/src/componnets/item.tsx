@@ -1,17 +1,29 @@
-type ItemElement = {
+import { unionId } from '../App';
+
+interface ItemsProps {
   id: number | string;
   description: string;
-  quantity: number;
   packed: boolean;
-};
+  quantity: number;
+  onDeletItem: (id: unionId) => void;
+  tooglePacked: (id: unionId) => void;
+}
 
-export const Item = (props: ItemElement) => {
+export const Item = (props: ItemsProps) => {
+  const { id, packed, description, quantity, onDeletItem, tooglePacked } =
+    props;
+
   return (
     <li>
-      <span className={props.packed ? 'textThrough' : ''}>
-        {props.description} {props.quantity}
+      <input
+        type='checkbox'
+        value={packed.toString()}
+        onChange={() => tooglePacked(id)}
+      />
+      <span className={packed ? 'textThrough' : ''}>
+        {description} {quantity}
       </span>
-      <button>❌</button>
+      <button onClick={() => onDeletItem(id)}>❌</button>
     </li>
   );
 };
