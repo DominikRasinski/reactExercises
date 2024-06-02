@@ -16,6 +16,13 @@ export type unionId = number | string;
 function App() {
   const [items, setItems] = useState<ItemsType[]>([]);
 
+  const handleClearList = () => {
+    const confirm = window.confirm('Are you sure?');
+    if (confirm) {
+      setItems([]);
+    }
+  };
+
   const handleAddItems = (item: ItemsType) => {
     setItems((items) => [...items, item]);
   };
@@ -40,6 +47,7 @@ function App() {
         items={items}
         onDeletItem={handleDeleteItem}
         tooglePacked={handleTooglePacked}
+        clearList={handleClearList}
       />
       <Stats items={items} />
     </div>
