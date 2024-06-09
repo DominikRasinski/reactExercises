@@ -1,6 +1,8 @@
 import { AccordionItem } from './accordionItem';
 import { dataType } from '../App';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, useState } from 'react';
+
+export type curOpenType = null | number;
 
 interface AccordionProps extends HTMLAttributes<HTMLLIElement> {
   items: dataType[];
@@ -8,17 +10,38 @@ interface AccordionProps extends HTMLAttributes<HTMLLIElement> {
 }
 
 export const Accordion = (props: AccordionProps) => {
+  const [curOpen, setIsOpen] = useState<curOpenType>(null);
   const { items } = props;
+
+  const handleOpen = (id: number) => {
+    setIsOpen(id);
+  };
+
   return (
     <div className='accordion'>
       {items.map((item, index) => (
         <AccordionItem
           id={index}
           title={item.title}
-          text={item.text}
           key={index}
-        />
+          curOpen={curOpen}
+          onOpen={handleOpen}>
+          {item.text}
+        </AccordionItem>
       ))}
+      <AccordionItem
+        id={23}
+        title={'Lista'}
+        key={'Lista'}
+        curOpen={curOpen}
+        onOpen={handleOpen}>
+        <p>Allows React developers to:</p>
+        <ul>
+          <li>Break up UI into components</li>
+          <li>Make components reusuable</li>
+          <li>Place state efficiently</li>
+        </ul>
+      </AccordionItem>
     </div>
   );
 };
