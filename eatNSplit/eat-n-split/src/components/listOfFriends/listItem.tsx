@@ -21,7 +21,7 @@ export const FriendListItem = (props: FriendProps) => {
         </p>
       )}
       {balance === 0 && <p>You and {name} are even</p>}
-      <Button>Select</Button>
+      <Button onEventClick={() => {}}>Select</Button>
     </li>
   );
 };

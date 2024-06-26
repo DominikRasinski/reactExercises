@@ -1,8 +1,15 @@
 type buttonPops = {
+  onEventClick: (e: any) => void;
   children: React.ReactNode;
 };
 
 export const Button = (props: buttonPops) => {
-  const { children } = props;
-  return <button className='button'>{children}</button>;
+  const { children, onEventClick } = props;
+  return (
+    <button
+      onClick={(e) => onEventClick(e.target)}
+      className='button'>
+      {children}
+    </button>
+  );
 };

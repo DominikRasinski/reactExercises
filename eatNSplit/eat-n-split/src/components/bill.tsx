@@ -13,14 +13,17 @@ export const Bill = (props: BillProps) => {
       <input type='text' />
       <label>Your expense</label>
       <input type='text' />
-      <label>expense</label>
-      <input type='text' />
+      <label>{name}expense</label>
+      <input
+        type='text'
+        disabled
+      />
       <label>Who is paying the bill?</label>
       <select>
-        <option>You</option>
-        <option>{name}</option>
+        <option value='user'>You</option>
+        <option value='friend'>{name}</option>
       </select>
-      <Button>Split bill</Button>
+      <Button onEventClick={() => {}}>Split bill</Button>
     </form>
   );
 };
