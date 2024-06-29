@@ -1,10 +1,20 @@
-import { FriendProps } from './list';
+import { FriendProps } from '../../App';
+import { friendIdUnion } from './list';
 import { Button } from '../button';
 
-export const FriendListItem = (props: FriendProps) => {
-  const { id, name, image, balance } = props;
+interface FriendListItemProps {
+  friend: FriendProps;
+  onSelectedFriend: (friend: any) => void;
+  selectedFriendId: friendIdUnion;
+}
+
+export const FriendListItem = (props: FriendListItemProps) => {
+  const { id, name, image, balance } = props.friend;
+
+  const isSelected = props.selectedFriendId === id;
+
   return (
-    <li>
+    <li className={isSelected ? 'selected' : ''}>
       <img
         src={image}
         alt={name}
@@ -21,7 +31,12 @@ export const FriendListItem = (props: FriendProps) => {
         </p>
       )}
       {balance === 0 && <p>You and {name} are even</p>}
-      <Button onEventClick={() => {}}>Select</Button>
+      <Button
+        onEventClick={() => {
+          props.onSelectedFriend(props.friend);
+        }}>
+        {isSelected ? 'Close' : 'Select'}
+      </Button>
     </li>
   );
 };

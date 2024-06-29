@@ -1,14 +1,12 @@
+import { FriendProps } from '../../App';
 import { FriendListItem } from './listItem';
 
-export interface FriendProps {
-  id: number;
-  name: string;
-  image: string;
-  balance: number;
-}
+export type friendIdUnion = number | null | undefined;
 
 type FriendListProps = {
   friends: FriendProps[];
+  onSelectedFriend: (friend: any) => void;
+  selectedFriendId: friendIdUnion;
 };
 
 export const FriendList = (props: FriendListProps) => {
@@ -19,10 +17,9 @@ export const FriendList = (props: FriendListProps) => {
         return (
           <FriendListItem
             key={item.id}
-            id={item.id}
-            name={item.name}
-            image={item.image}
-            balance={item.balance}
+            friend={item}
+            onSelectedFriend={props.onSelectedFriend}
+            selectedFriendId={props.selectedFriendId}
           />
         );
       })}

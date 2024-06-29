@@ -5,29 +5,57 @@ import { Bill } from './components/bill';
 import { initialFriends } from './data';
 import { Button } from './components/button';
 
+export interface FriendProps {
+  id: number;
+  name: string;
+  image: string;
+  balance: number;
+}
+
+type unionFriend = FriendProps | null;
+
 function App() {
-  const [addFriends, setAddFriends] = useState(false);
+  const [addFriends, setShowAddFriend] = useState(false);
   const [friendList, setFriendList] = useState(initialFriends);
+  const [friendSelected, setFriendSelected] = useState<unionFriend>(null);
 
   const handleShowAdd = (e: any) => {
-    setAddFriends((addFriends) => !addFriends);
+    setShowAddFriend((addFriends) => !addFriends);
   };
 
   const handleAddNewFriends = (friend: any) => {
     setFriendList((friendList) => [...friendList, friend]);
-    setAddFriends(false);
+    setShowAddFriend(false);
+  };
+
+  const handleSelectedFriend = (friend: any) => {
+    setFriendSelected((cur) => (cur?.id === friend.id ? null : friend));
+    setShowAddFriend(false);
+  };
+
+  const handleSplitBill = (value: any) => {
+    console.log(value);
   };
 
   return (
     <div className='app'>
       <div className='sidebar'>
-        <FriendList friends={friendList} />
+        <FriendList
+          friends={friendList}
+          onSelectedFriend={handleSelectedFriend}
+          selectedFriendId={friendSelected?.id}
+        />
         {addFriends && <AddFriend onAddFriend={handleAddNewFriends} />}
         <Button onEventClick={handleShowAdd}>
           {addFriends ? 'Close' : 'Add friend'}
         </Button>
       </div>
-      <Bill name='DUPA' />
+      {friendSelected && (
+        <Bill
+          friend={friendSelected}
+          onSplitBill={handleSplitBill}
+        />
+      )}
     </div>
   );
 }
