@@ -4,17 +4,18 @@ import { Button } from './button';
 
 interface BillProps {
   friend: FriendProps;
-  onSplitBill: (value: any) => void;
+  onSplitBill: (value: number) => void;
 }
 
 export const Bill = (props: BillProps) => {
   const [bill, setBill] = useState<number>(0);
   const [paidByUser, setPaidByUser] = useState<number>(0);
-  const [whoIsPaying, setWhoIsPaying] = useState('');
+  const [whoIsPaying, setWhoIsPaying] = useState('user');
 
   const paidByFriend = bill && paidByUser ? bill - paidByUser : '';
 
   const { name } = props.friend;
+  const { onSplitBill } = props;
 
   const paidValueIsTrue = (e: number, oldPaid: number, newPaid: number) => {
     return e > bill ? oldPaid : newPaid;
@@ -24,6 +25,8 @@ export const Bill = (props: BillProps) => {
     e.preventDefault();
 
     if (!bill || !paidByUser) return;
+
+    onSplitBill(whoIsPaying === 'user' ? Number(paidByFriend) : -paidByUser);
   };
 
   return (

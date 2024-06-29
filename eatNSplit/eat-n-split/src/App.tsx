@@ -33,8 +33,16 @@ function App() {
     setShowAddFriend(false);
   };
 
-  const handleSplitBill = (value: any) => {
-    console.log(value);
+  const handleSplitBill = (value: number) => {
+    setFriendList((friends) =>
+      friends.map((friend) =>
+        friend.id === friendSelected?.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+
+    setFriendSelected(null);
   };
 
   return (
