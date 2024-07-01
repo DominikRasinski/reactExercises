@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { tempMovieData, tempWatchedData } from './data';
-import { Navbar } from './components/NavBar';
+import { Navbar } from './components/navbar/NavBar';
+import { Logo } from './components/navbar/Logo';
+import { Search } from './components/navbar/Search';
+import { Results } from './components/navbar/Results';
 import { Main } from './components/Main';
 
 export type Movie = {
@@ -20,12 +23,6 @@ export type Watched = {
   userRating: number;
 };
 
-const average = (arr: any) =>
-  arr.reduce(
-    (acc: any, cur: any, i: any, arr: any) => acc + cur / arr.length,
-    0
-  );
-
 function App() {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState(tempMovieData);
@@ -33,17 +30,16 @@ function App() {
   const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(true);
 
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watched.map((movie) => movie.userRating));
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
-
   return (
     <>
-      <Navbar
-        movies={tempMovieData}
-        setQuery={setQuery}
-        query={query}
-      />
+      <Navbar>
+        <Logo />
+        <Search
+          query={query}
+          setQuery={setQuery}
+        />
+        <Results movies={movies} />
+      </Navbar>
       <Main
         movies={tempMovieData}
         watched={tempWatchedData}
@@ -51,9 +47,6 @@ function App() {
         isOpen2={isOpen2}
         setIsOpen1={setIsOpen1}
         setIsOpen2={setIsOpen2}
-        avgImdbRating={avgImdbRating}
-        avgUserRating={avgUserRating}
-        avgRuntime={avgRuntime}
       />
     </>
   );

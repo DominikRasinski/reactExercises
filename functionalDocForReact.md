@@ -10,6 +10,13 @@
 - useMemo
 - useCallback
 
+---
+
+## Wykorzystywane techniki
+
+- [`Prop drilling`](#prop-drilling)
+- [`Component composition`](#component-composition)
+
 ### useState
 
 > Hook useState w React.js jest używany do zarządzania stanem komponentu.
@@ -71,3 +78,9 @@ Zapisany stan w hooku `useState` jest zapisywany w momencie renderowania kompone
 > Efekt uruchamia się po każdym renderowaniu, chyba że podasz tablicę zależności.
 >
 > Możesz zwrócić funkcję czyszczącą, która uruchomi się przed kolejnym uruchomieniem efektu lub przy odmontowywaniu komponentu
+
+---
+
+### prop-drilling
+
+### component-composition
