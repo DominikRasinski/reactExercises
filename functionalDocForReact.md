@@ -83,4 +83,46 @@ Zapisany stan w hooku `useState` jest zapisywany w momencie renderowania kompone
 
 ### prop-drilling
 
+Prop driling jest to zarazem sposób na przekazywanie danych z rodzica do dziecka w react.js. I również jest to problem jakim możemy się zacząć borykać podczas tworzenia większej aplikacji, ponieważ przekazywanie z jednego komponentu do drugiego, jeżeli jest ich na przykład dwoje to jest prosty sposób. Ale jeżeli chcemy przekazać dane z rodzica do dziecka, a następnie do dziecka do dziecka i tak dalej to jest problem, ponieważ musimy śledzić wszystkie komponenty, które są "pośrednikami" przekazania propsów.
+
+Przykładowy kod z prop drilling:
+
+```js
+import React, { useState } from 'react';
+
+function ParentComponent() {
+  const [data, setData] = useState('');
+  const handleChange = (event) => {
+    setData(event.target.value);
+  };
+  return (
+    <div>
+      <h1>Parent Component</h1>
+      <ChildComponent
+        data={data}
+        onChange={handleChange}
+      />
+    </div>
+  );
+}
+
+function ChildComponent({ data, onChange }) {
+  return (
+    <div>
+      <h2>Child Component</h2>
+      <input
+        type='text'
+        value={data}
+        onChange={onChange}
+      />
+    </div>
+  );
+}
+export default ParentComponent;
+```
+
+Zalecanym sposobem na przekazywanie danych pomiędzy większą ilością komponentów jest użycie kontekstu. Kontekst pozwala na przekazywanie danych pomiędzy wszystkimi komponentami bez potrzeby śledzenia ich hierarchii. Albo tak zwanego podejścia `component composition`
+
+---
+
 ### component-composition

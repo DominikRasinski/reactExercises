@@ -5,6 +5,10 @@ import { Logo } from './components/navbar/Logo';
 import { Search } from './components/navbar/Search';
 import { Results } from './components/navbar/Results';
 import { Main } from './components/Main';
+import { ListBox } from './components/ListBox';
+import { MovieList } from './components/MovieList';
+import { WatchedList } from './components/WatchedList';
+import { Summary } from './components/Summary';
 
 export type Movie = {
   imdbID: string;
@@ -27,8 +31,6 @@ function App() {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
-  const [isOpen1, setIsOpen1] = useState(true);
-  const [isOpen2, setIsOpen2] = useState(true);
 
   return (
     <>
@@ -40,14 +42,15 @@ function App() {
         />
         <Results movies={movies} />
       </Navbar>
-      <Main
-        movies={tempMovieData}
-        watched={tempWatchedData}
-        isOpen1={isOpen1}
-        isOpen2={isOpen2}
-        setIsOpen1={setIsOpen1}
-        setIsOpen2={setIsOpen2}
-      />
+      <Main>
+        <ListBox>
+          <MovieList movies={movies} />
+        </ListBox>
+        <ListBox>
+          <Summary watched={watched} />
+          <WatchedList watched={watched} />
+        </ListBox>
+      </Main>
     </>
   );
 }
