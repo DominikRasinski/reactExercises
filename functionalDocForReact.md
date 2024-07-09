@@ -85,6 +85,8 @@ Zapisany stan w hooku `useState` jest zapisywany w momencie renderowania kompone
 
 Prop driling jest to zarazem sposób na przekazywanie danych z rodzica do dziecka w react.js. I również jest to problem jakim możemy się zacząć borykać podczas tworzenia większej aplikacji, ponieważ przekazywanie z jednego komponentu do drugiego, jeżeli jest ich na przykład dwoje to jest prosty sposób. Ale jeżeli chcemy przekazać dane z rodzica do dziecka, a następnie do dziecka do dziecka i tak dalej to jest problem, ponieważ musimy śledzić wszystkie komponenty, które są "pośrednikami" przekazania propsów.
 
+![prop drilig](./docsImage/prop-driling-light.svg)
+
 Przykładowy kod z prop drilling:
 
 ```js
