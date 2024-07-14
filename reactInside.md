@@ -2,14 +2,17 @@
 
 ## Zagadnienia
 
-- Co się dzieje gdy dodajemy komponent do aplikacji
-- Jak działa renderowanie faza Render (The Render Phase)
-- Jak działa renderowanie faza Commit (The Commit Phase)
-- Key Prop
-- Diffing
-- State Update Bathing
-- Event Handler
 
+- [`Co się dzieje gdy dodajemy komponent do drzewa aplikacji`](#co-się-dzieje-gdy-dodajemy-komponent-do-drzewa-aplikacji)
+
+- [`Jak działa renderowanie faza renderowania (The Render Phase)`](#jak-działa-renderowanie-faza-renderowania-the-render-phase)
+
+- [`Jak działa renderowanie faza zatwierdzania (The Commit Phase)`](#jak-działa-renderowanie-faza-zatwierdzania-the-commit-phase)
+
+- [`Key Prop`](#key-prop)
+
+- Jak Eventy działają w React
+- State Update Batching
 ---
 
 ### Co się dzieje gdy dodajemy komponent do drzewa aplikacji
@@ -21,26 +24,48 @@ Komponent posiada kilka faz kiedy jest dodawany do drzewa aplikacji o to jakie f
 3. `React Element` - faza kiedy funkcja komponentu zostaje przetłumaczona z JSX na React Element. React Element jest opisem UI który zostanie przekazany do kolejnej fazy.
 4. `DOM Element (HTML)` - faza DOM Element to faza w której React Element zostaje skonwertowany na HTML i wstawiony do DOM.
 
-![](./docsImage/reactKomponent.png)
+![Komponent w React](./docsImage/reactKomponent.png)
 
 ---
 
-### Jak działa renderowanie faza Render (The Render Phase)
+### Jak działa renderowanie faza renderowania (The Render Phase)
 
-TODO należy opisać fazę renderowania
-TODO należy dodać diagram przedstawiający fazę renderowania
+Faza Render to faza w której React wywołuje funkcje komponentów i wstępnie tłumaczy JSX na React.element tak jak nowy DOM powinien wyglądać. Faza renderowania nie tworzy zmian w DOM ani nie aktualizuje stanu aplikacji lub DOM.
+
+#### Sytuacje w której faza render jest wywoływana
+
+1. Wstępne renderowanie aplikacji
+2. Stan został zaktualizowany w jednej lub więcej instancjach komponentu w aplikacji (re-render)
+
+Proces renderowania jest wywoływany dla całej aplikacji, w praktyce wygląda to tak, jakby React wywołał renderowanie tylko i wyłącznie dla komponentu, gdzie jego stan został zaktualizowany/zmieniony ale tak naprawdę całe syntetyczne drzewo DOM zostało odtworzone od nowa.
+
+Renderowanie zachodzi asynchronicznie, dzięki czemu główny wątek aplikacji nie zostaje zapchany przez nad mierne wykorzystanie procesora.
+
+![Faza render](./docsImage/renderPhase.png)
 
 ---
 
-### Jak działa renderowanie faza Commit (The Commit Phase)
+### Jak działa renderowanie faza zatwierdzania (The Commit Phase)
 
-TODO należy opisać fazę commitowania
-TODO należy dodać diagram przedstawiający fazę commitowania
+Faza commit to faza w której React po uzyskaniu informacji jak powinien wyglądać DOM aplikacji, z poprzedniej fazy Render przygotowuje zmiany w rzeczywistym DOM (HTML). Proces aktualizacji rzeczywistego DOM przechodzi przez kilka etapów
+
+1. Przejście całej Fazy Render
+2. Faza Render zwraca wirtualny DOM
+3. Faza Commit przyjmuje wirtualny DOM od fazy Render
+4. Sprawdzany jest komponent w jakim zaszła zmiana oraz wszystkie jego dzieci
+5. Wywoływany jest proces "Fiber" którego zadaniem jest połączenie jak i porównanie jakie zamy zaszły pomiędzy wirtualnym DOM a rzeczywistym DOM
+6. Zaktualizowanie drzewa Fiber
+7. Zwrócenie listy zmian jakie zaszły w DOM i wprowadzenie ich.
+
+![Faza Commit](./docsImage/commitPhase.png)
 
 ---
 
 ### Key Prop
 
-Key prop jest bardzo przydatny do tego aby React mógł zidentyfikować konkretny element w drzewie aplikacji. Dzięki temu jak się przekaże prop key to można odświeżyć drzewo React kiedy komponent jest renderowany w liście, a jego wartości są przekazywane do innego komponentu bez odświeżania.
+Key prop pozwala React'owi na rozróżnianie pomiędzy wieloma wystąpieniami tej samej instancji komponentu.
 
-TODO trzeba przepisać keyProp ponieważ jest do taki sobie teraz
+1. Gdy key prop pozostaje taki sam w fazie render to element nie jest re-renderowany zostaje nie ruszony w DOM aplikacji.
+2. Jeżeli key prop zmieni się w fazie render to element jest re-renderowany i jego stan sprzed re-renderowania zostaje usunięty.
+
+---
