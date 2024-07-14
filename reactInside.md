@@ -6,6 +6,9 @@
 - Jak działa renderowanie faza Render (The Render Phase)
 - Jak działa renderowanie faza Commit (The Commit Phase)
 - Key Prop
+- Diffing
+- State Update Bathing
+- Event Handler
 
 ---
 
@@ -24,12 +27,20 @@ Komponent posiada kilka faz kiedy jest dodawany do drzewa aplikacji o to jakie f
 
 ### Jak działa renderowanie faza Render (The Render Phase)
 
+TODO należy opisać fazę renderowania
+TODO należy dodać diagram przedstawiający fazę renderowania
+
 ---
 
 ### Jak działa renderowanie faza Commit (The Commit Phase)
+
+TODO należy opisać fazę commitowania
+TODO należy dodać diagram przedstawiający fazę commitowania
 
 ---
 
 ### Key Prop
 
 Key prop jest bardzo przydatny do tego aby React mógł zidentyfikować konkretny element w drzewie aplikacji. Dzięki temu jak się przekaże prop key to można odświeżyć drzewo React kiedy komponent jest renderowany w liście, a jego wartości są przekazywane do innego komponentu bez odświeżania.
+
+TODO trzeba przepisać keyProp ponieważ jest do taki sobie teraz
