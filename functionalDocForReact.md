@@ -79,6 +79,8 @@ Zapisany stan w hooku `useState` jest zapisywany w momencie renderowania kompone
 >
 > Możesz zwrócić funkcję czyszczącą, która uruchomi się przed kolejnym uruchomieniem efektu lub przy odmontowywaniu komponentu
 
+UseEffect jest uruchamiany dopiero po renderowaniu komponentu.
+
 ---
 
 ### prop-drilling
