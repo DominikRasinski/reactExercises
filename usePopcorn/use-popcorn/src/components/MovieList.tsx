@@ -1,24 +1,30 @@
-import { Movie } from '../App';
+import { Movie, unionMovieData } from '../App';
+import { tempMovieData } from '../data';
 
 interface MovieProps {
-  movies: Movie[];
+  movies: unionMovieData[];
 }
 
 export const MovieList = (props: MovieProps) => {
-  const { movies } = props;
+  let { movies } = props;
+
+  if(movies === undefined) {
+    movies = [...tempMovieData];
+  }
+  
   return (
     <ul className='list'>
       {movies?.map((movie) => (
-        <li key={movie.imdbID}>
+        <li key={movie?.imdbID}>
           <img
-            src={movie.Poster}
-            alt={`${movie.Title} poster`}
+            src={movie?.Poster}
+            alt={`${movie?.Title} poster`}
           />
-          <h3>{movie.Title}</h3>
+          <h3>{movie?.Title}</h3>
           <div>
             <p>
               <span>🗓</span>
-              <span>{movie.Year}</span>
+              <span>{movie?.Year}</span>
             </p>
           </div>
         </li>

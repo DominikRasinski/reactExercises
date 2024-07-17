@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { tempMovieData, tempWatchedData } from './data';
 import { Navbar } from './components/navbar/NavBar';
 import { Logo } from './components/navbar/Logo';
@@ -9,6 +9,7 @@ import { ListBox } from './components/ListBox';
 import { MovieList } from './components/MovieList';
 import { WatchedList } from './components/WatchedList';
 import { Summary } from './components/Summary';
+import { Loader } from './components/Loader';
 
 export type Movie = {
   imdbID: string;
@@ -27,10 +28,28 @@ export type Watched = {
   userRating: number;
 };
 
+export type unionMovieData = Movie | undefined;
+
 function App() {
   const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState<unionMovieData[]>(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => function () {
+    async function getData() {
+      try{
+        setIsLoading(true);
+        const res = await fetch(`https://www.omdbapi.com/?apikey=933a888b&s=${query}`)
+        const data = await res.json();
+        setMovies(data.Search);
+      } catch(e) {
+        return console.log("blad")
+      }
+      setIsLoading(false);
+  }
+  getData();
+  },[query])
 
   return (
     <>
@@ -44,7 +63,7 @@ function App() {
       </Navbar>
       <Main>
         <ListBox>
-          <MovieList movies={movies} />
+          {isLoading ? <Loader/> : <MovieList movies={movies} />}
         </ListBox>
         <ListBox>
           <Summary watched={watched} />
