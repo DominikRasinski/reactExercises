@@ -40,8 +40,6 @@ function App() {
 
   useEffect(() => function () {
     async function getData() {
-      console.log(query)
-      if(!query) return
       try{
         setIsLoading(true);
         const res = await fetch(`https://www.omdbapi.com/?apikey=933a888b&s=${query}`)
@@ -59,6 +57,10 @@ function App() {
         setError((err as Error).message);
       }
       setIsLoading(false);
+  }
+  if(!query && query.length < 3) {
+    setError('')
+    return
   }
   getData();
   },[query])

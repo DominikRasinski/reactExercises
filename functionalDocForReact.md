@@ -81,6 +81,9 @@ Zapisany stan w hooku `useState` jest zapisywany w momencie renderowania kompone
 
 UseEffect jest uruchamiany dopiero po renderowaniu komponentu.
 
+UseEffect załącza się po wyświetleniu DOM w przeglądarce czyli po etapie paint browser
+Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki niej udaje się zapanować nad momentem kiedy useEffect ma zostać odpalony, albo pozwala zaplanować kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
+
 ---
 
 ### prop-drilling
