@@ -10,6 +10,7 @@ import { MovieList } from './components/MovieList';
 import { WatchedList } from './components/WatchedList';
 import { Summary } from './components/Summary';
 import { Loader } from './components/Loader';
+import { ErrorMessage } from './components/Error';
 
 export type Movie = {
   imdbID: string;
@@ -35,16 +36,27 @@ function App() {
   const [movies, setMovies] = useState<unionMovieData[]>(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => function () {
     async function getData() {
+      console.log(query)
+      if(!query) return
       try{
         setIsLoading(true);
         const res = await fetch(`https://www.omdbapi.com/?apikey=933a888b&s=${query}`)
+        if(!res.ok) {
+          throw new Error("Something went wrong");
+        }
         const data = await res.json();
+        console.log(data.Response)
+        if(data.Response === 'False') {
+          throw new Error("Movie not found");
+        }
         setMovies(data.Search);
-      } catch(e) {
-        return console.log("blad")
+        setError('')
+      } catch(err) {
+        setError((err as Error).message);
       }
       setIsLoading(false);
   }
@@ -63,7 +75,7 @@ function App() {
       </Navbar>
       <Main>
         <ListBox>
-          {isLoading ? <Loader/> : <MovieList movies={movies} />}
+          {error !== '' ? <ErrorMessage message={error} /> : isLoading ? <Loader/> : <MovieList movies={movies} />}
         </ListBox>
         <ListBox>
           <Summary watched={watched} />
