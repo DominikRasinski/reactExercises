@@ -11,6 +11,7 @@ import { WatchedList } from './components/WatchedList';
 import { Summary } from './components/Summary';
 import { Loader } from './components/Loader';
 import { ErrorMessage } from './components/Error';
+import { SelectedMovie } from './components/SelectedMovie';
 
 export type Movie = {
   imdbID: string;
@@ -29,7 +30,8 @@ export type Watched = {
   userRating: number;
 };
 
-export type unionMovieData = Movie | undefined;
+export type unionMovieData = Movie;
+export type unionSelect = string | null;
 
 function App() {
   const [query, setQuery] = useState('');
@@ -37,6 +39,15 @@ function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isSelected, setIsSelected] = useState<unionSelect>(null);
+
+  const handleCloseDetails = () => {
+    setIsSelected(null);
+  }
+
+  const handleSelectMovie = (id: unionSelect) => {
+    setIsSelected((isSelected) => (id === isSelected ? null : id));
+  }
 
   useEffect(() => function () {
     async function getData() {
@@ -77,11 +88,17 @@ function App() {
       </Navbar>
       <Main>
         <ListBox>
-          {error !== '' ? <ErrorMessage message={error} /> : isLoading ? <Loader/> : <MovieList movies={movies} />}
+          {error !== '' ? <ErrorMessage message={error} /> : isLoading ? <Loader/> : <MovieList movies={movies} onSelect={handleSelectMovie} />}
         </ListBox>
         <ListBox>
-          <Summary watched={watched} />
-          <WatchedList watched={watched} />
+        {isSelected !== null ?
+          <SelectedMovie movieId={isSelected} onCloseMovie={handleCloseDetails}/>
+         :
+          <>
+            <Summary watched={watched} />
+            <WatchedList watched={watched} />
+          </>
+        }
         </ListBox>
       </Main>
     </>
