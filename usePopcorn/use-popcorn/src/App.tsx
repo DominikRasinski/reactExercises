@@ -49,7 +49,7 @@ function App() {
     setIsSelected((isSelected) => (id === isSelected ? null : id));
   }
 
-  useEffect(() => function () {
+  useEffect(() => {
     async function getData() {
       try{
         setIsLoading(true);
@@ -58,7 +58,6 @@ function App() {
           throw new Error("Something went wrong");
         }
         const data = await res.json();
-        console.log(data.Response)
         if(data.Response === 'False') {
           throw new Error("Movie not found");
         }

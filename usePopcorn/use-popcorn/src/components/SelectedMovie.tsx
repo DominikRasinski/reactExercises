@@ -1,8 +1,26 @@
 import { useEffect, useState } from "react";
 import { unionSelect } from "../App";
-import { Movie } from "../App";
+import { Stars } from "./stars/Stars";
+import { Loader } from "./Loader";
+import { ErrorMessage } from "./Error";
 
-type MovieDetails = Omit<Movie, "imdbID">;
+// type MovieDetails = Omit<Movie, "imdbID"> & {
+//     Plot: string;
+// };
+
+type MovieDetails = {
+    Title: string;
+    Year: string;
+    Poster: string;
+    Plot: string;
+    Released: string;
+    Runtime: string;
+    Genre: string;
+    Actors: string;
+    Director: string;
+    imdbRating: string;
+}
+
 
 interface SelectedMovieProps {
     movieId: unionSelect;
@@ -13,8 +31,9 @@ export const SelectedMovie = (props: SelectedMovieProps) => {
     const {movieId, onCloseMovie} = props;
     const [isLoading, setIsLoading] = useState(false)
     const [movie, setMovie] = useState<MovieDetails>();
+    const [error, setError] = useState('');
 
-    useEffect(() => function(){
+    useEffect(() => {
         async function getMovieDetails(){
             try{
                 setIsLoading(true);
@@ -22,23 +41,56 @@ export const SelectedMovie = (props: SelectedMovieProps) => {
                 if(!res.ok) {
                     throw new Error('Something went wrong when trying to fetch details about movie');
                 }
+                
                 const data = await res.json();
-                setMovie(data);
-                console.log(data)
+                if(data.Response === 'False') {
+                    throw new Error("Movie not found");
+                }
+                setMovie(() => data);
+                setError('');
             } catch(err) {
-
+                setError((err as Error).message)
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         }
-        getMovieDetails();
-    }, [])
+
+        if(movieId) {
+            getMovieDetails();
+        }
+    }, [movieId]);
 
     if(movieId === null) return null;
 
     return (
         <div className="details">
-            <button className="btn-back" onClick={onCloseMovie}>&larr;</button>
-            {movieId}
+            {error !== '' ? <ErrorMessage message={error} /> : 
+                isLoading ? <Loader /> : 
+                <>
+                    <header>
+                        <button className="btn-back" onClick={onCloseMovie}>&larr;</button>
+                        <img src={movie?.Poster} alt={`Poster of ${movie?.Title}`} />
+                        <div className="details-overview">
+                            <h2>{movie?.Title}</h2>
+                            <p>{movie?.Released} &bull; {movie?.Runtime}</p>
+                            <p>{movie?.Genre}</p>
+                            <p><span>⭐</span>{movie?.imdbRating} IMDb rating</p>
+                        </div>
+                    </header>
+
+                    <section>
+                        <div className="rating">
+                            <Stars maxRating={10} size={30}/>
+                        </div>
+                        <p>
+                            <em>{movie?.Plot}</em>
+                        </p>
+                        <p>Starring {movie?.Actors}</p>
+                        <p>Directed by {movie?.Director}</p>
+                    </section>
+                </>
+            
+            }
         </div>
     )
 }
