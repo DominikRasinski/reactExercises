@@ -1,8 +1,8 @@
-import { unionMovieData } from '../App';
+import { Movie } from '../App';
 import { tempMovieData } from '../data';
 
 interface MovieProps {
-  movies: unionMovieData[];
+  movies: Movie[];
   onSelect: (id: string | null) => void;
 }
 

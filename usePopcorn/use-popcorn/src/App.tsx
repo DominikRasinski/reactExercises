@@ -30,13 +30,12 @@ export type Watched = {
   userRating: number;
 };
 
-export type unionMovieData = Movie;
 export type unionSelect = string | null;
 
 function App() {
   const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState<unionMovieData[]>(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState<Movie[]>(tempMovieData);
+  const [watched, setWatched] = useState<Watched[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isSelected, setIsSelected] = useState<unionSelect>(null);
@@ -47,6 +46,14 @@ function App() {
 
   const handleSelectMovie = (id: unionSelect) => {
     setIsSelected((isSelected) => (id === isSelected ? null : id));
+  }
+
+  const handleAddWatchedMovie = (movie: any) => {
+    setWatched(watched => [...watched, movie]);
+  }
+
+  const handleDeleteWatch = (id: string) => {
+    setWatched(watched => watched.filter((movie) => movie.imdbID !== id));
   }
 
   useEffect(() => {
@@ -91,11 +98,11 @@ function App() {
         </ListBox>
         <ListBox>
         {isSelected !== null ?
-          <SelectedMovie movieId={isSelected} onCloseMovie={handleCloseDetails}/>
+          <SelectedMovie watched={watched} movieId={isSelected} onCloseMovie={handleCloseDetails} onAddToFavorites={handleAddWatchedMovie} />
          :
           <>
             <Summary watched={watched} />
-            <WatchedList watched={watched} />
+            <WatchedList watched={watched} onRemoveWatch={handleDeleteWatch} />
           </>
         }
         </ListBox>

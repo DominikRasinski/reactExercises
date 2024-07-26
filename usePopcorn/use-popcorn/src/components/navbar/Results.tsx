@@ -1,6 +1,6 @@
-import { Movie, unionMovieData } from '../../App';
+import { Movie } from '../../App';
 interface ResultsProps {
-  movies: unionMovieData[];
+  movies: Movie[];
 }
 
 export const Results = (props: ResultsProps) => {

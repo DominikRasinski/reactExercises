@@ -8,12 +8,14 @@ export const Summary = (props: SummaryProps) => {
   const { watched } = props;
   const average = (arr: any) =>
     arr.reduce(
-      (acc: any, cur: any, i: any, arr: any) => acc + cur / arr.length,
+      (acc: number, cur: number, i: number, arr: any) => acc + cur / arr.length,
       0
     );
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watched.map((movie) => movie.userRating));
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
+  const avgImdbRating = (average(watched.map((movie) => movie.imdbRating))).toFixed(1);
+  const avgUserRating = (average(watched.map((movie) => movie.userRating))).toFixed(1);
+  const avgRuntime =  Math.floor(average(watched.map((movie) => movie.runtime)));
+
+    console.log(avgUserRating);
 
   return (
     <div className='summary'>
