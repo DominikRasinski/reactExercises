@@ -51,10 +51,11 @@ export const SelectedMovie = (props: SelectedMovieProps) => {
 
 
     useEffect(() => {
+        const controller = new AbortController();
         async function getMovieDetails(){
             try{
                 setIsLoading(true);
-                const res = await fetch(`https://www.omdbapi.com/?apikey=933a888b&i=${movieId}`);
+                const res = await fetch(`https://www.omdbapi.com/?apikey=933a888b&i=${movieId}`, {signal: controller.signal});
                 if(!res.ok) {
                     throw new Error('Something went wrong when trying to fetch details about movie');
                 }
@@ -75,6 +76,11 @@ export const SelectedMovie = (props: SelectedMovieProps) => {
         if(movieId) {
             getMovieDetails();
         }
+
+        return () => {
+            controller.abort();
+        }
+
     }, [movieId]);
 
     if(movieId === null) return null;
