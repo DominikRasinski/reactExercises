@@ -10,12 +10,15 @@
 - useMemo
 - useCallback
 
----
 
 ## Wykorzystywane techniki
 
 - [`Prop drilling`](#prop-drilling)
 - [`Component composition`](#component-composition)
+- Derived state
+
+## Problemy
+- Stale State
 
 ### useState
 
@@ -49,13 +52,13 @@ export default Counter;
 
 ---
 
-#### Czas życia zapisanego stanu
+### Czas życia zapisanego stanu
 
 Hook `useState` przechowuje stan w pamięci komponentu podczas jego cyklu życia. Oznacza to, że stan jest zachowywany tak długo, jak długo komponent jest zamontowany w drzewie komponentów. Inaczej mówiąc stan jest tak długo przetrzymywany w pamięci komponentu jak jest wyrenderowany, jeżeli komponent zostanie wyrenderowany ponownie, stan zostanie przywrócony do początkowego stanu.
 
 ---
 
-#### Cykl życia stanu w useState
+### Cykl życia stanu w useState
 
 1. **Montowanie komponentu - wywołanie funkcji komponentu**
    - Kiedy komponent jest po raz pierwszy montowany (renderowany) w drzewie komponentów, `useState` inicjalizuje stan z podaną wartością początkową.
@@ -85,6 +88,7 @@ UseEffect załącza się po wyświetleniu DOM w przeglądarce czyli po etapie pa
 Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki niej udaje się zapanować nad momentem kiedy useEffect ma zostać odpalony, albo pozwala zaplanować kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
 
 ---
+## Techniki
 
 ### prop-drilling
 
@@ -133,3 +137,39 @@ Zalecanym sposobem na przekazywanie danych pomiędzy większą ilością kompone
 ---
 
 ### component-composition
+---
+### Derived state
+Technika odnośni się do tworzenia stanu komponentu, który jest tworzony na podstawie innych stanów lub właściwości pozyskanych z props. **Stan jest dynamicznie tworzony w trakcie renderowania komponentu**, nie wykorzystujemy do jego stworzenia hooka `useState`.
+
+Przykładowy kod wykorzystujący `Delivered State` ustawiony za pomocą dostarczonych **Props'ów**
+
+```TSX
+import React from 'react';
+
+function ItemList({ items }) {
+  // Derived state: liczba elementów
+  const itemCount = items.length;
+
+  return (
+    <div>
+      <p>Number of items: {itemCount}</p>
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default ItemList;
+```
+
+> **Delivered state** pozwala na obliczanie stanu na podstawie innych stanów lub props'ów, co pozwala nam na uproszczenie logiki komponentów i uniknięcie problemów z synchronizacją.
+>
+> Jednym z minusów takiego działania jest to, że takie obliczenia lub ustawianie danych stanów są kosztowne, aby zminimalizować wpływ takiego **Delivered state** na wydajność możemy wykorzystać to tego hook'a `useMemo`
+
+---
+## Problemy
+### Stale state
+

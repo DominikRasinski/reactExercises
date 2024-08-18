@@ -3,16 +3,14 @@
 ## Zagadnienia
 
 
-- [`Co się dzieje gdy dodajemy komponent do drzewa aplikacji`](#co-się-dzieje-gdy-dodajemy-komponent-do-drzewa-aplikacji)
-
-- [`Jak działa renderowanie faza renderowania (The Render Phase)`](#jak-działa-renderowanie-faza-renderowania-the-render-phase)
-
-- [`Jak działa renderowanie faza zatwierdzania (The Commit Phase)`](#jak-działa-renderowanie-faza-zatwierdzania-the-commit-phase)
-
-- [`Key Prop`](#key-prop)
-
-- Jak Eventy działają w React
-- State Update Batching
+- [Opis działania Reacta wewnątrz](#opis-działania-reacta-wewnątrz)
+  - [Zagadnienia](#zagadnienia)
+    - [Co się dzieje gdy dodajemy komponent do drzewa aplikacji](#co-się-dzieje-gdy-dodajemy-komponent-do-drzewa-aplikacji)
+    - [Jak działa renderowanie faza renderowania (The Render Phase)](#jak-działa-renderowanie-faza-renderowania-the-render-phase)
+      - [Sytuacje w której faza render jest wywoływana](#sytuacje-w-której-faza-render-jest-wywoływana)
+    - [Jak działa renderowanie faza zatwierdzania (The Commit Phase)](#jak-działa-renderowanie-faza-zatwierdzania-the-commit-phase)
+    - [Key Prop](#key-prop)
+    - [React hooks i ich zasady](#react-hooks-i-ich-zasady)
 ---
 
 ### Co się dzieje gdy dodajemy komponent do drzewa aplikacji
@@ -69,3 +67,4 @@ Key prop pozwala React'owi na rozróżnianie pomiędzy wieloma wystąpieniami te
 2. Jeżeli key prop zmieni się w fazie render to element jest re-renderowany i jego stan sprzed re-renderowania zostaje usunięty.
 
 ---
+### React hooks i ich zasady
