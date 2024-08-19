@@ -68,3 +68,8 @@ Key prop pozwala React'owi na rozróżnianie pomiędzy wieloma wystąpieniami te
 
 ---
 ### React hooks i ich zasady
+Najważniejszą zasadą `hook'ów` jest to że muszą być definiowane na samej górze komponentu, **NIE** mogą być definiowane wewnątrz jakiś **instrukcji warunkowych, pętli, zagnieżdżonych funkcji** lub po słowie **return komponentu zwracającym ReactNode**
+
+`Hooki` powinny być wywoływane tylko i wyłączenie w funkcji komponentu lub w `hookach` stworzonych przez użytkownika tak zwane `custom hook`
+
+`Hook'i` nie mogą być warunkowo definiowane ponieważ drzewo 'Fiber' wewnątrz aplikacji React jest budowane na podstawie listy, jeżeli wewnętrzna część ulegnie zmianie to i zaolokowana pamięć dla elementu w liście ulegnie zmiane co doprowadzi do rozsypania się spójności drzewa i błędu aplikacji.

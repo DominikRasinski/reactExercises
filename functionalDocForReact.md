@@ -172,4 +172,48 @@ export default ItemList;
 ---
 ## Problemy
 ### Stale state
+`Stale State` odnosi się do sytuacji w której komponent używa przestarzałej wersji stanu, ponieważ stan nie został zaktualizowany w odpowiednim momencie lub w odpowiedni sposób. Co zazwyczaj prowadzi do nie oczekiwanym zachowań oraz błędów.
 
+Przykład problemu `stale state`
+```TSX
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    setTimeout(() => {
+      setCount(count + 1);
+    }, 1000);
+  };
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={handleClick}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+Kliknięcie przycisku zwiększy wartość `count` o 1 po upływie 1 sekundy. Jednakże, jeśli klikniemy w przycisk kilka razy w krótkim odstępie czasu to zmienna `count` ulegnie rozsynchronizowaniu. Dzieje się tak ponieważ funkcja `setTimeout` używa przestarzałej wartości zmiennej `count` w momencie jej wywoływania.
+
+Rozwiązaniem problemu jest wykorzystanie funkcji aktualizującej stan, która przyjmuje poprzedni stan i na jego podstawie zwraca nowy stan.
+
+Przed:
+```TSX
+  const handleClick = () => {
+    setTimeout(() => {
+      setCount(count + 1);
+    }, 1000);
+  };
+```
+Po:
+```TSX
+  const handleClick = () => {
+    setTimeout(() => {
+      setCount(prevCount => prevCount + 1); // użycie funkcji aktualizującej
+    }, 1000);
+  };
+```
