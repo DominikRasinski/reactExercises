@@ -35,7 +35,13 @@ export type unionSelect = string | null;
 function App() {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState<Movie[]>(tempMovieData);
-  const [watched, setWatched] = useState<Watched[]>([]);
+  const [watched, setWatched] = useState<Watched[]>(() => {
+    const storedValue = localStorage.getItem('watched')
+    if(storedValue) {
+      return JSON.parse(storedValue);
+    }
+    return
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isSelected, setIsSelected] = useState<unionSelect>(null);
@@ -55,6 +61,10 @@ function App() {
   const handleDeleteWatch = (id: string) => {
     setWatched(watched => watched.filter((movie) => movie.imdbID !== id));
   }
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify(watched))
+  }, [watched])
 
   useEffect(() => {
     async function getData() {
