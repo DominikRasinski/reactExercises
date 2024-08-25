@@ -4,9 +4,9 @@
 
 - [`useState`](#usestate)
 - [`useEffect`](#useeffect)
+- useRef
 - useContext
 - useReducer
-- useRef
 - useMemo
 - useCallback
 
@@ -86,6 +86,9 @@ UseEffect jest uruchamiany dopiero po renderowaniu komponentu.
 
 UseEffect załącza się po wyświetleniu DOM w przeglądarce czyli po etapie paint browser
 Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki niej udaje się zapanować nad momentem kiedy useEffect ma zostać odpalony, albo pozwala zaplanować kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
+
+### useRef
+`useRef` to komponent, który jest wykorzystywany do przechowywania wartości pomiędzy renderami, ale aktualizacja wartości w `useRef` nie powoduje re-renderu całego komponentu
 
 ---
 ## Techniki
