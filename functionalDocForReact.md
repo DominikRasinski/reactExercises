@@ -91,6 +91,65 @@ Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki
 `useRef` to komponent, który jest wykorzystywany do przechowywania wartości pomiędzy renderami, ale aktualizacja wartości w `useRef` nie powoduje re-renderu całego komponentu
 
 ---
+
+### useReducer
+
+Hook useReducer jest bardo podobny do hooka `useState`, ale umożliwia przeniesienie logiki aktualizacji stanu do pojedynczej funkcji poza komponentem.
+Dzięki temu ułatwia zarządzanie bardziej skomplikowaną logiką stanu w porównaniu do prostych zmian stanu, które można łatwiej obsłużyć za pomocą `useState`
+
+## Działanie hooka useReducer
+Hook przyjmuje trzy argumenty:
+1. `reducer`: funkcja, która zawiera całą logikę aktualizacji stanu. Przyjmuje bieżący stan i akcję jako argument i zwraca następny stan.
+2. `initialState`: początkowa wartość stanu, może być dowolnego typu.
+3. `init` (opcjonalnie): funkcja używana do leniwego inicjalizowania stanu, jeśli jest potrzebna
+
+Zwraca tablicę składającą się z dwóch elementów:
+
+1. `state`: reprezentuje bieżącą wartość stanu, ustawioną na wartość `initialState` podczas pierwszego renderowania
+2. `dispatch`: funkcja, które aktualizuje wartość stanu i zawsze wywołuje ponowny render, podobnie jak funkcja aktulizująca w `useState`
+
+```TSX
+import React, { useReducer } from 'react';
+// Definicja typów akcji
+const ActionTypes = {
+  INCREMENT: 'increment',
+  DECREMENT: 'decrement',
+  RESET: 'reset',
+};
+
+// Reducer
+function reducer(state, action) {
+  switch (action.type) {
+    case ActionTypes.INCREMENT:
+      return { count: state.count + 1 };
+    case ActionTypes.DECREMENT:
+      return { count: state.count - 1 };
+    case ActionTypes.RESET:
+      return { count: 0 };
+    default:
+      throw new Error();
+  }
+}
+
+// Komponent Counter
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <div>
+      Licznik: {state.count}
+      <button onClick={() => dispatch({ type: ActionTypes.INCREMENT })}>Zwiększ</button>
+      <button onClick={() => dispatch({ type: ActionTypes.DECREMENT })}>Zmniejsz</button>
+      <button onClick={() => dispatch({ type: ActionTypes.RESET })}>Resetuj</button>
+    </div>
+  );
+}
+
+export default Counter;
+```
+
+---
+
 ## Techniki
 
 ### prop-drilling
