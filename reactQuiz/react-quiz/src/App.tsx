@@ -1,5 +1,5 @@
 import React from 'react';
-import DateCounter from './DateCounter';
+import DateCounter from './components/DateCounter';
 
 function App() {
   return (
