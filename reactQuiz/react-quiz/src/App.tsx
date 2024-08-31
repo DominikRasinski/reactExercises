@@ -1,7 +1,10 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import Header from './components/Header';
 import { Main } from './components/Main';
-
+import Loader from './components/Loader';
+import { ErrorNotify } from './components/ErrorNotify';
+import { StartHeader } from './components/StartHeader';
+import { Question } from './components/Question';
 
 type StatusUnion = 'loading' | 'ready' | 'error' | 'finished' | 'active';
 
@@ -12,9 +15,10 @@ const initialState = {
   status: 'loading' as StatusUnion
 }
 
-type Action = 
+export type Action = 
 | { type: "DATA_RECEIVED"; payload: any }
 | { type: "DATA_ERROR"; payload: any }
+| { type: "START_QUIZ" }
 
 
 const reducer = (state: any, action: Action) => {
@@ -30,6 +34,11 @@ const reducer = (state: any, action: Action) => {
         ...state,
         status: 'error'
       };
+    case 'START_QUIZ':
+      return {
+        ...state,
+        status: 'active'
+      };
     default:
       throw new Error("Action not found");
     
@@ -38,7 +47,9 @@ const reducer = (state: any, action: Action) => {
 
 function App() {
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{questions, status, currentQuestion}, dispatch] = useReducer(reducer, initialState);
+
+  const questionNumber = questions.length;
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -59,8 +70,10 @@ function App() {
     <div className="App">
       <Header />
       <Main >
-        <p>1/15</p>
-        <p>Question?</p>
+        {status === 'loading' && <Loader />}
+        {status === 'ready' && <StartHeader questionNumber={questionNumber} dispatch={dispatch}/>}
+        {status === 'error' && <ErrorNotify />}
+        {status === 'active' && <Question questions={questions[currentQuestion]}/>}
       </Main>
     </div>
   );
