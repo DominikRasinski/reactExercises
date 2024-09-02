@@ -7,8 +7,13 @@ import { StartHeader } from './components/StartHeader';
 import { Question } from './components/Question';
 import { NextButton } from './components/NextButton';
 import { ProgresBar } from './components/ProgresBar';
+import { FinishScreen } from './components/FinishScreen';
+import Footer from './components/Footer';
+import { Timer } from './components/Timer';
 
 type StatusUnion = 'loading' | 'ready' | 'error' | 'finished' | 'active';
+
+const SECS_PER_QUESTION = 30;
 
 const initialState = {
   questions: [],
@@ -16,6 +21,8 @@ const initialState = {
   answer: null,
   userAnswers: [],
   points: 0,
+  highScore: 0,
+  secondsRemaining: null,
   status: 'loading' as StatusUnion
 }
 
@@ -25,7 +32,9 @@ export type Action =
 | { type: "START_QUIZ" }
 | { type: "NEW_ANSWER"; payload: any }
 | { type: "NEXT_QUESTION" }
-
+| { type: "FINISH_QUIZ" }
+| { type: "RESET_QUIZ" }
+| { type: "TIMER_TICK" }
 
 const reducer = (state: any, action: Action) => {
   switch (action.type) {
@@ -43,7 +52,8 @@ const reducer = (state: any, action: Action) => {
     case 'START_QUIZ':
       return {
         ...state,
-        status: 'active'
+        status: 'active',
+        secondsRemaining: state.questions.length * SECS_PER_QUESTION,
       };
     case 'NEW_ANSWER':
 
@@ -59,6 +69,21 @@ const reducer = (state: any, action: Action) => {
         ...state,
         currentQuestion: state.currentQuestion + 1, answer: null
       };
+    case 'FINISH_QUIZ':
+      return {
+        ...state,
+        status: 'finished', highScore: state.points > state.highScore ? state.points : state.highScore
+      };
+    case 'RESET_QUIZ':
+      return {
+        ...initialState, questions: state.questions, highScore: state.highScore, status: 'ready'
+      };
+    case 'TIMER_TICK':
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        status: state.secondsRemaining === 0 ? 'finished' : state.status
+      };
     default:
       throw new Error("Action not found");
     
@@ -67,7 +92,7 @@ const reducer = (state: any, action: Action) => {
 
 function App() {
 
-  const [{questions, status, currentQuestion, userAnswers, answer, points}, dispatch] = useReducer(reducer, initialState);
+  const [{questions, status, currentQuestion, secondsRemaining, answer, points, highScore}, dispatch] = useReducer(reducer, initialState);
 
   const questionNumber = questions.length;
   const maxPossiblePoints = questions.reduce((acc: number, question: any) => acc + question.points, 0);
@@ -98,9 +123,15 @@ function App() {
         <>
           <ProgresBar index={currentQuestion} total={questionNumber} points={points} maxPossiblePoints={maxPossiblePoints} answer={answer}/>
           <Question questions={questions[currentQuestion]} dispatch={dispatch} answer={answer}/>
-          <NextButton dispatch={dispatch} answer={answer}/>
+          <Footer>
+            <Timer dispatch={dispatch} secondsRemaining={secondsRemaining}/>
+            <NextButton dispatch={dispatch} answer={answer} index={currentQuestion} numberOfQuestions={questionNumber}/>
+          </Footer>
         </>
           )}
+        {status === 'finished' && (
+          <FinishScreen points={points} maxPossiblePoints={maxPossiblePoints} highScore={highScore} dispatch={dispatch}/>
+        )}
       </Main>
     </div>
   );
