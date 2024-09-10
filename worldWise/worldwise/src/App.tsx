@@ -5,6 +5,7 @@ import { Product } from "./pages/Product";
 import { Pricing } from "./pages/Pricing";
 import { PageNotFound } from "./pages/PageNotFound";
 import { AppLayout } from "./pages/AppLayout";
+import Login from "./pages/Login";
 
 export function App() {
   return (
@@ -15,6 +16,7 @@ export function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="*" element={<PageNotFound />} />
         <Route path="/app" element={<AppLayout />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
