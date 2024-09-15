@@ -32,7 +32,11 @@ export const CountriesList = (props: CountriesListProps) => {
   return (
     <ul className={styles.countryList}>
       {countryList.map((city) => (
-        <CountryItem country={city.country} emoji={city.emoji} />
+        <CountryItem
+          country={city.country}
+          emoji={city.emoji}
+          key={city.country}
+        />
       ))}
     </ul>
   );
