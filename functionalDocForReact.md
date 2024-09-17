@@ -10,14 +10,15 @@
 - useMemo
 - useCallback
 
-
 ## Wykorzystywane techniki
 
 - [`Prop drilling`](#prop-drilling)
+- Context API
 - [`Component composition`](#component-composition)
 - Derived state
 
 ## Problemy
+
 - Stale State
 
 ### useState
@@ -31,7 +32,7 @@
 Przykład:
 
 ```js
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -88,6 +89,7 @@ UseEffect załącza się po wyświetleniu DOM w przeglądarce czyli po etapie pa
 Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki niej udaje się zapanować nad momentem kiedy useEffect ma zostać odpalony, albo pozwala zaplanować kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
 
 ### useRef
+
 `useRef` to komponent, który jest wykorzystywany do przechowywania wartości pomiędzy renderami, ale aktualizacja wartości w `useRef` nie powoduje re-renderu całego komponentu
 
 ---
@@ -98,7 +100,9 @@ Hook useReducer jest bardo podobny do hooka `useState`, ale umożliwia przeniesi
 Dzięki temu ułatwia zarządzanie bardziej skomplikowaną logiką stanu w porównaniu do prostych zmian stanu, które można łatwiej obsłużyć za pomocą `useState`
 
 ## Działanie hooka useReducer
+
 Hook przyjmuje trzy argumenty:
+
 1. `reducer`: funkcja, która zawiera całą logikę aktualizacji stanu. Przyjmuje bieżący stan i akcję jako argument i zwraca następny stan.
 2. `initialState`: początkowa wartość stanu, może być dowolnego typu.
 3. `init` (opcjonalnie): funkcja używana do leniwego inicjalizowania stanu, jeśli jest potrzebna
@@ -161,20 +165,17 @@ Prop driling jest to zarazem sposób na przekazywanie danych z rodzica do dzieck
 Przykładowy kod z prop drilling:
 
 ```js
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function ParentComponent() {
-  const [data, setData] = useState('');
+  const [data, setData] = useState("");
   const handleChange = (event) => {
     setData(event.target.value);
   };
   return (
     <div>
       <h1>Parent Component</h1>
-      <ChildComponent
-        data={data}
-        onChange={handleChange}
-      />
+      <ChildComponent data={data} onChange={handleChange} />
     </div>
   );
 }
@@ -183,11 +184,7 @@ function ChildComponent({ data, onChange }) {
   return (
     <div>
       <h2>Child Component</h2>
-      <input
-        type='text'
-        value={data}
-        onChange={onChange}
-      />
+      <input type="text" value={data} onChange={onChange} />
     </div>
   );
 }
@@ -199,8 +196,11 @@ Zalecanym sposobem na przekazywanie danych pomiędzy większą ilością kompone
 ---
 
 ### component-composition
+
 ---
+
 ### Derived state
+
 Technika odnośni się do tworzenia stanu komponentu, który jest tworzony na podstawie innych stanów lub właściwości pozyskanych z props. **Stan jest dynamicznie tworzony w trakcie renderowania komponentu**, nie wykorzystujemy do jego stworzenia hooka `useState`.
 
 Przykładowy kod wykorzystujący `Delivered State` ustawiony za pomocą dostarczonych **Props'ów**
@@ -232,11 +232,15 @@ export default ItemList;
 > Jednym z minusów takiego działania jest to, że takie obliczenia lub ustawianie danych stanów są kosztowne, aby zminimalizować wpływ takiego **Delivered state** na wydajność możemy wykorzystać to tego hook'a `useMemo`
 
 ---
+
 ## Problemy
+
 ### Stale state
+
 `Stale State` odnosi się do sytuacji w której komponent używa przestarzałej wersji stanu, ponieważ stan nie został zaktualizowany w odpowiednim momencie lub w odpowiedni sposób. Co zazwyczaj prowadzi do nie oczekiwanym zachowań oraz błędów.
 
 Przykład problemu `stale state`
+
 ```TSX
 import React, { useState } from 'react';
 
@@ -259,11 +263,13 @@ function Counter() {
 
 export default Counter;
 ```
+
 Kliknięcie przycisku zwiększy wartość `count` o 1 po upływie 1 sekundy. Jednakże, jeśli klikniemy w przycisk kilka razy w krótkim odstępie czasu to zmienna `count` ulegnie rozsynchronizowaniu. Dzieje się tak ponieważ funkcja `setTimeout` używa przestarzałej wartości zmiennej `count` w momencie jej wywoływania.
 
 Rozwiązaniem problemu jest wykorzystanie funkcji aktualizującej stan, która przyjmuje poprzedni stan i na jego podstawie zwraca nowy stan.
 
 Przed:
+
 ```TSX
   const handleClick = () => {
     setTimeout(() => {
@@ -271,7 +277,9 @@ Przed:
     }, 1000);
   };
 ```
+
 Po:
+
 ```TSX
   const handleClick = () => {
     setTimeout(() => {
