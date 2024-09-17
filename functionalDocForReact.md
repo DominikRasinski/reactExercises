@@ -4,9 +4,9 @@
 
 - [`useState`](#usestate)
 - [`useEffect`](#useeffect)
-- useRef
-- useContext
-- useReducer
+- [`useRef`](#useref)
+- [`useReducer`](#usereducer)
+- [`useContext`](#usecontext)
 - useMemo
 - useCallback
 
@@ -15,11 +15,11 @@
 - [`Prop drilling`](#prop-drilling)
 - Context API
 - [`Component composition`](#component-composition)
-- Derived state
+- [`Derived state`](#derived-state)
 
 ## Problemy
 
-- Stale State
+- [`Stale State`](#stale-state)
 
 ### useState
 
@@ -98,6 +98,18 @@ Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki
 
 Hook useReducer jest bardo podobny do hooka `useState`, ale umożliwia przeniesienie logiki aktualizacji stanu do pojedynczej funkcji poza komponentem.
 Dzięki temu ułatwia zarządzanie bardziej skomplikowaną logiką stanu w porównaniu do prostych zmian stanu, które można łatwiej obsłużyć za pomocą `useState`
+
+---
+
+### useContext
+
+`useContext` to hook w React, który pozwala na korzystanie z kontekstu w funkcjonalnych komponentach. Kontekst w React służy do przekazywania danych przez drzewo komponentów bez konieczności ręcznego przekazywania propsów na każdym poziomie.
+
+Jak działa `useContext`:
+
+1. Tworzenie kontekstu: Najpierw tworzysz kontekst za pomocą React.createContext.
+1. Dostarczanie kontekstu: Następnie używasz komponentu Provider, aby dostarczyć wartość kontekstu do drzewa komponentów.
+1. Korzystanie z kontekstu: W końcu używasz hooka useContext, aby uzyskać dostęp do wartości kontekstu w dowolnym komponencie.
 
 ## Działanie hooka useReducer
 
