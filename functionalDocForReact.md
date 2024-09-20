@@ -99,6 +99,23 @@ Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki
 Hook useReducer jest bardo podobny do hooka `useState`, ale umożliwia przeniesienie logiki aktualizacji stanu do pojedynczej funkcji poza komponentem.
 Dzięki temu ułatwia zarządzanie bardziej skomplikowaną logiką stanu w porównaniu do prostych zmian stanu, które można łatwiej obsłużyć za pomocą `useState`
 
+#### Przykładowe użycie `useRecuder`
+
+```TSX
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
+#### Opis
+
+- `state` - reprezentuje aktualnie przekazaną wartość do `useReducer` przyjmuje wartość inicjacyjną (`initialState`) podczas inicjacyjnego renderu
+- `dispatch` - jest to funkcja która odpowiada za logikę aktualizacji stanu oraz jest odpowiedzialna za wyzwolenie akcji `re-render` tak jak funkcja aktualizująca w `useState`
+- `reducer` - jest to funkcja która przechowuje całą logikę odpowiedzialną jak stan zostanie zaktualizowany. Przyjmuje jako argumenty `state` i `action` zwraca na ich podstawie kolejny stan.
+- `initialState` - przechowuje inicjacyjną wartość może być dowolnego typu(\*)
+
+(\*) dowolnego typu aplikuje się tylko dla aplikacji pisanych w JSX jeżeli będziemy pisać aplikację za pomocą TypeScript musimy ściśle o typować taką zmienną.
+
+https://www.freecodecamp.org/news/react-usereducer-hook/
+
 ---
 
 ### useContext
