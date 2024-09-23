@@ -1,16 +1,11 @@
 import styles from "./CountryList.module.css";
-import { City } from "../App";
 import Spinner from "./Spinner";
 import CountryItem from "./CountryItem";
 import Message from "./Message";
+import { useCities } from "../contexts/CitiesContexts";
 
-type CountriesListProps = {
-  cities: City[];
-  isLoading: boolean;
-};
-
-export const CountriesList = (props: CountriesListProps) => {
-  const { cities } = props;
+export const CountriesList = () => {
+  const { cities, isLoading } = useCities();
 
   const countryList = cities.reduce<{ country: string; emoji: string }[]>(
     (arr, city) => {
@@ -22,7 +17,7 @@ export const CountriesList = (props: CountriesListProps) => {
     []
   );
 
-  if (props.isLoading) {
+  if (isLoading) {
     return <Spinner />;
   }
 
