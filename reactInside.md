@@ -2,7 +2,6 @@
 
 ## Zagadnienia
 
-
 - [Opis działania Reacta wewnątrz](#opis-działania-reacta-wewnątrz)
   - [Zagadnienia](#zagadnienia)
     - [Co się dzieje gdy dodajemy komponent do drzewa aplikacji](#co-się-dzieje-gdy-dodajemy-komponent-do-drzewa-aplikacji)
@@ -11,6 +10,11 @@
     - [Jak działa renderowanie faza zatwierdzania (The Commit Phase)](#jak-działa-renderowanie-faza-zatwierdzania-the-commit-phase)
     - [Key Prop](#key-prop)
     - [React hooks i ich zasady](#react-hooks-i-ich-zasady)
+    - [Optymalizacja](#optymalizacja)
+      - [Zapobieganie zbędnym re-renderom możemy uzyskać za pomocą:](#zapobieganie-zbędnym-re-renderom-możemy-uzyskać-za-pomocą)
+      - [Poprawienie szybkości aplikacji](#poprawienie-szybkości-aplikacji)
+      - [Redukcja wielkości paczki](#redukcja-wielkości-paczki)
+
 ---
 
 ### Co się dzieje gdy dodajemy komponent do drzewa aplikacji
@@ -67,9 +71,39 @@ Key prop pozwala React'owi na rozróżnianie pomiędzy wieloma wystąpieniami te
 2. Jeżeli key prop zmieni się w fazie render to element jest re-renderowany i jego stan sprzed re-renderowania zostaje usunięty.
 
 ---
+
 ### React hooks i ich zasady
+
 Najważniejszą zasadą `hook'ów` jest to że muszą być definiowane na samej górze komponentu, **NIE** mogą być definiowane wewnątrz jakiś **instrukcji warunkowych, pętli, zagnieżdżonych funkcji** lub po słowie **return komponentu zwracającym ReactNode**
 
 `Hooki` powinny być wywoływane tylko i wyłączenie w funkcji komponentu lub w `hookach` stworzonych przez użytkownika tak zwane `custom hook`
 
 `Hook'i` nie mogą być warunkowo definiowane ponieważ drzewo 'Fiber' wewnątrz aplikacji React jest budowane na podstawie listy, jeżeli wewnętrzna część ulegnie zmianie to i zaolokowana pamięć dla elementu w liście ulegnie zmiane co doprowadzi do rozsypania się spójności drzewa i błędu aplikacji.
+
+---
+
+### Optymalizacja
+
+Istnieją 3 główne filary Optymalizacji w React.js
+
+1. Zapobieganie zbędnym re-renderom
+2. Poprawienie szybkości aplikacji responsywność
+3. Redukcja wielkości paczki
+
+#### Zapobieganie zbędnym re-renderom możemy uzyskać za pomocą:
+
+- useMemo
+- useCallback
+- Przekazywanie elementów jako dziecko (children) lub jako normalny prop
+  - przekazanie komponentu jako dziecko do innego komponentu uodpornia komponent rodzica na nie potrzebny re-render kiedy dziecko będzie mieć zaktualizowany stan
+
+#### Poprawienie szybkości aplikacji
+
+- useMemo
+- useCallback
+- useTransition
+
+#### Redukcja wielkości paczki
+
+- użycie mniejszej ilości zewnętrznych paczek
+- dzielenie kodu oraz używanie lazy loading
