@@ -1,9 +1,9 @@
 # Funkcjonalna dokumentacja React.js
 
 ## Słownik
-**Odwołanie** - w programowaniu pozwala nam na interakcje z wartościami przechowywanymi w pamięci komputera, mechanizm odwołania upraszcza składnie języka pozwalając nam na "przechowywanie" wartości w bardziej zrozumiałym dla człowieka języku. W innym przypadku musielibyśmy dostawać się do wartości poprzez podawanie jej adresu komórki pamięci.
-**Deklaracja** - deklaracja to tak naprawdę tworzenie "rezerwacji" identyfikatora dla jeszcze nie określonego typu danych.
-**Definicja** - to rezerwacja oraz dokładne opisanie danego identyfikatora. Każda definicja jest zarazem deklaracją ale **NIE** odwrotnie.
+**Odwołanie** - w programowaniu pozwala nam na interakcje z wartościami przechowywanymi w pamięci komputera, mechanizm odwołania upraszcza składnie języka pozwalając nam na "przechowywanie" wartości w bardziej zrozumiałym dla człowieka języku. W innym przypadku musielibyśmy dostawać się do wartości poprzez podawanie jej adresu komórki pamięci.</br>
+**Deklaracja** - deklaracja to tak naprawdę tworzenie "rezerwacji" identyfikatora dla jeszcze nie określonego typu danych.</br>
+**Definicja** - to rezerwacja oraz dokładne opisanie danego identyfikatora. Każda definicja jest zarazem deklaracją ale **NIE** odwrotnie.</br>
 **Inicjalizacja (inicjowanie)** - inicjacja polega na przypisaniu wartości do danej zmiennej w momencie jej deklaracji.
 
 ## Często używane hooki
