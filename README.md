@@ -9,15 +9,10 @@ Repozytorium zawiera ćwiczenia które pozwalają mi zrozumieć o wiele lepiej d
 - React i nie tylko ponieważ wszystkie frameworki reactopodobne powstały w jednym celu aby uprościć synchronizację elementów UI z danymi pobieranymi z serwera. Można by powiedzieć a czy JS w domyślnej formie nie potrafiłby tego samego? Ależ oczywiście, że by potrafił tylko odtworzenie funkcji takich, które oferuje react zajęłoby naprawdę dużo czas oraz stworzyłoby tak zwany "spaghetii code" - co samo w sobie wyklucza odtworzenie react'a w samym JS.
 - React posługuję się abstrakcją w stosunku do DOM, dzięki czemu developer nie musi pisać kodu jak osiągnąć wygląd UI, tylko wystarczy że napisze co chce uzyskać jako wygląd UI. Bez zbędnej szamotaniny z wybieraniem poszczególnych elementów DOM, React to osiągnie samemu takie podejście nazywamy '**Declarative**' a podejście gdzie musimy opisać wszystkie kroki jak rozwiązać dany problem to '**Imperative**'
 
-# Opis projektów - co jest w nich zawarte i poruszane
+# Dokumentacja
 
-## Pizza menu
-
-- Projekt porusza podstawowe informacje na temat tworzenia projektów w React.js takie jak:
-  - Komponenty - czym są, i dlaczego z nich korzystamy, zasady działania itd.
-  - Propsy - podstawowa wiedza czym są propsy.
-  - State - czyli wykorzystanie hook'a useState pozwalającego na zapisywanie oraz zmienianie stanu zmiennej.
-  - Obsługa podstawowych eventów i formularzy.
+- [Dokumentacja funkcjonalna](./functionalDocForReact.md)
+- [Dokumentacja wewnętrznych mechanizmów](./reactInside.md)
 
 # Trouble shooting
 
