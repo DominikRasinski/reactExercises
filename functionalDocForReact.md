@@ -1,5 +1,11 @@
 # Funkcjonalna dokumentacja React.js
 
+## Słownik
+**Odwołanie** - w programowaniu pozwala nam na interakcje z wartościami przechowywanymi w pamięci komputera, mechanizm odwołania upraszcza składnie języka pozwalając nam na "przechowywanie" wartości w bardziej zrozumiałym dla człowieka języku. W innym przypadku musielibyśmy dostawać się do wartości poprzez podawanie jej adresu komórki pamięci.
+**Deklaracja** - deklaracja to tak naprawdę tworzenie "rezerwacji" identyfikatora dla jeszcze nie określonego typu danych.
+**Definicja** - to rezerwacja oraz dokładne opisanie danego identyfikatora. Każda definicja jest zarazem deklaracją ale **NIE** odwrotnie.
+**Inicjalizacja (inicjowanie)** - inicjacja polega na przypisaniu wartości do danej zmiennej w momencie jej deklaracji.
+
 ## Często używane hooki
 
 - [`useState`](#usestate)
@@ -90,7 +96,29 @@ Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki
 
 ### useRef
 
-`useRef` to komponent, który jest wykorzystywany do przechowywania wartości pomiędzy renderami, ale aktualizacja wartości w `useRef` nie powoduje re-renderu całego komponentu
+`useRef` - jest hookiem który pozwala odwołać się do wartości która nie wymaga re-render'u całego komponentu w którym się znajduje.
+Dane jakie nie wymagają re-render'u całego komponentu to dane które **NIE** wpływają na wyświetlaną treść komponentu jak na przykład `id` wciśniętego przycisku przez użytkownika to jest typ danych które nie są potrzebne dla użytkownika, ale mogą być wykorzystywane w dalszej części aplikacji.
+
+```TSX
+const ButtonWithId = () => {
+  // definiowanie hook'a useRef wraz z wartością inicjowaną
+  const lastClickedButtonId = useRef(null);
+
+  // funkcja odpowiedzialna za obsługę kliknięcia przycisku
+  const handleClick = (id) => {
+    lastClickedButtonId.current = id;
+    console.log(`Button with ID ${id} clicked`);
+  };
+
+  return (
+    <div>
+      <button onClick={() => handleClick(1)}>Button 1</button>
+      <button onClick={() => handleClick(2)}>Button 2</button>
+      <button onClick={() => handleClick(3)}>Button 3</button>
+    </div>
+  );
+};
+```
 
 ---
 
