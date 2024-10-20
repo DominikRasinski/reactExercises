@@ -43,11 +43,19 @@ Aby temu zapobiec należy stworzyć plik `.prettierrc.json` i dodać do niego js
 }
 ```
 
+#### Aby prettier przestał robić nie potrzebne głupoty warto również rozważyć podmianę wszystkich opcji jedną:
+
+```json
+{
+  "tabWidth": 2
+}
+```
+
 Przydatne info na temat konfigurowania nie tylko pretiera https://dev.to/suchintan/reacttypescripteslint-prettier-full-setup-p7j
 
 ## Błąd Type '{}' is not assignable to type 'ReactNode'
 
-Błąd występuje w dziwny sposób jeżeli chcemy się bawić w bardziej skomplikowane struktury danych jak na przykład `kolekcje obiektów` to po stworzeniu typu oraz interfejsu obsługującego typ poprzednio zapisany. Próba iteracji po kolekcji może się zakończyć błędem, że nasz typ nie jest możliwy do przypisania do ReactNode. Aby naprawić taki błąd należy tak naprawdę sprawdzić czy poprawnie przypisujemy typy danych, ponieważ gdy taki błąd występuje to bardzo możliwe, że błędem po naszej stronie jest zła próba przypisania zwracanej wartości przez kolkcję. Dobrym przykładem może być komponent tworzący dynamicznie listę:
+Błąd występuje w dziwny sposób jeżeli chcemy się bawić w bardziej skomplikowane struktury danych jak na przykład `kolekcje obiektów` to po stworzeniu typu oraz interfejsu obsługującego typ poprzednio zapisany. Próba interakcji po kolekcji może się zakończyć błędem, że nasz typ nie jest możliwy do przypisania do ReactNode. Aby naprawić taki błąd należy tak naprawdę sprawdzić czy poprawnie przypisujemy typy danych, ponieważ gdy taki błąd występuje to bardzo możliwe, że błędem po naszej stronie jest zła próba przypisania zwracanej wartości przez kolekcję. Dobrym przykładem może być komponent tworzący dynamicznie listę:
 
 ```JSX
 type skillInfo = {
@@ -70,7 +78,9 @@ export const SkillList = (props: SkillsProps) => {
 };
 ```
 
-Jeżeli spróbujemy odczytać obiekt następująco czyli nie wskazując właściwości z przypisaną wartością, to zostanie mam zwrócony błąd Type '{}' is not assignable to type 'ReactNode'
+#### Przykłady błednego odwołania się do wartości
+
+Jeżeli spróbujemy odczytać obiekt nie wskazując własności z przypisaną wartością, to zostanie mam zwrócony **błąd Type '{}' is not assignable to type 'ReactNode'**
 
 ```JSX
 export const SkillList = (props: SkillsProps) => {
@@ -84,7 +94,8 @@ export const SkillList = (props: SkillsProps) => {
 };
 ```
 
-Można taki błąd również zamknąć w stringu który nie będzie zwracać nam takich błędów. Ale w takim wypadku zostanie zwrócona nam wartość tablicy `[object object]`
+Można taki błąd również zamaskować pod postacią typu `string` który nie będzie zwracać nam błędu parsera.</br>
+Ale w takim wypadku zostanie zwrócona nam wartość tablicy `[object object]` - **Nadal program będzie źle działać**
 
 ```JSX
 export const SkillList = (props: SkillsProps) => {
