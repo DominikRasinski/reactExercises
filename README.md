@@ -2,7 +2,8 @@
 
 Repozytorium zawiera ćwiczenia które pozwalają mi zrozumieć o wiele lepiej działanie frameworku React.js
 
-- Każdy trudniejszy temat będzie posiadać plik readme z dodatkowymi informacjami
+- Ważniejsze elementy są zapisywane w sekcji [Dokumentacja](#dokumentacja)
+- Wraz z rozwojem `dokumentacji` w tym projekcie jest prowadzone laboratorium na prostych przykładach https://github.com/DominikRasinski/react-simple-practise
 
 ## React po co nam to?
 
