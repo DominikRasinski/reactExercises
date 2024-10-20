@@ -1,6 +1,7 @@
 # Funkcjonalna dokumentacja React.js
 
 ## Słownik
+
 **Odwołanie** - w programowaniu pozwala nam na interakcje z wartościami przechowywanymi w pamięci komputera, mechanizm odwołania upraszcza składnie języka pozwalając nam na "przechowywanie" wartości w bardziej zrozumiałym dla człowieka języku. W innym przypadku musielibyśmy dostawać się do wartości poprzez podawanie jej adresu komórki pamięci.</br>
 **Deklaracja** - deklaracja to tak naprawdę tworzenie "rezerwacji" identyfikatora dla jeszcze nie określonego typu danych.</br>
 **Definicja** - to rezerwacja oraz dokładne opisanie danego identyfikatora. Każda definicja jest zarazem deklaracją ale **NIE** odwrotnie.</br>
@@ -253,6 +254,26 @@ Zalecanym sposobem na przekazywanie danych pomiędzy większą ilością kompone
 ---
 
 ### component-composition
+
+Kompozycja komponentów polega na tym, że nie przekazujemy kolejnych parametrów za pomocą `props` a zamiast tego robimy kompozycję z innego komponentu.\
+Kompozycja polega na tym że przekazujemy jeden komponent do kolejnego jako dziecko używamy do tego `children` jako `ReactNode`
+
+```TSX
+const Button = ({ onClick, children }) => (
+ <button onClick={onClick}>{children}</button>
+);
+
+const App = () => {
+  const onClick = () => alert('Hey 👋');
+
+  return (
+    <Button onClick={onClick}>Click me!</Button>
+  );
+};
+```
+
+Kompozycja rozwiązuje problem [prop driling](#prop-drilling) napotykany wtedy kiedy musimy w dużej ilości pod komponentów przekazać potrzebne im do działania props'y\
+Również kompozycja jest częścią optymalizacji ze względu na to, że aktualizacja komponentu dziecka **NIE** uruchamia re-render'u komponentu rodzica pozbywamy się zbędnego re-render'u (Wasted Renders)
 
 ---
 
