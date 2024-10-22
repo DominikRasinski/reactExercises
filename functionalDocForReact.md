@@ -311,6 +311,8 @@ export default ItemList;
 
 ---
 
+## React Server Components
+
 ## Problemy
 
 ### Stale state
