@@ -313,7 +313,7 @@ export default ItemList;
 
 ## React Server Components
 
-Ciekawa lektura na temat komponentu jest zawarta tutaj:  https://www.freecodecamp.org/news/react-server-components-for-beginners/
+Ciekawa lektura na temat komponentu jest zawarta tutaj: https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
 W streszczeniu serwerowe komponenty w React pozwalają nam na pozbycie się problemu jakim jest "waterfall" wystepujacy w zapytaniach o dane komponentu rodzica oraz jego dzieci.
 
@@ -331,6 +331,7 @@ const App = () => {
 Załóżmy, że komponent `Wrapper` odpytuje API o dane `wrapperData.json` oraz jego dzieci `ComponentA` i `ComponentB` następująco odpytują API od ane `componentAData.json`, `componentBData.json` w takim przypadku jeżeli komponent będzie renderowany na poziomie klienta nastąpi zjawisko `waterfall` czyli aby komponent `Wrapper` został w renderowany musimy poczekać na wszystkie zapytania idąc w dół czyli gdy zakończą odpytywać API wszystkie jego dzieci, w tym przykładzie `ComponentA` oraz `ComponentB`, zakładając że każde zapytanie zajmuje komponentowi 1 sekundę to kończymy z winkiem 3 sekund zanim ujrzymy komponent `Wrapper` wraz z jego dziećmi.
 
 ### Rozwiązania jakie posiadamy to:
+
 1. Zaciąganie danych na wyższym poziomie i wstrzykiwanie ich do danych komponentów za pomocą wykorzystania `props`, zamiast zaciąganie danych wewnątrz każdego z komponentów
 2. Wykorzystanie `React Server Component`
 
@@ -350,9 +351,28 @@ const App = () => {
 }
 
 ```
+
 Wstrzykiwanie danych co prawda rozwiązuje zjawisko `waterfall` ale ma to do siebie, że jest trudniejsze w utrzymaniu gdy aplikacja się rozrasta może ulec zmianie implementacja danych, backend może przestać wystawiać dane itp... to wszystko przekłada się na późniejsze sprzątanie kodu.
 
 #### 2 Wykorzystanie React Server Component
+
+```TSX
+// Note.js - Server Component
+
+import NoteEditor from 'NoteEditor';
+
+async function Note(props) {
+  const { note } = props;
+
+  return (
+    <div>
+      <h1>{note.title}</h1>
+      <section>{note.body}</section>
+    </div>
+  );
+```
+
+Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp do danych w serwerze bez potrzeby ich pobierania. Dlatego w komponencie serwerowym nie wykorzystujemy, żadnego fetchowana danych ani podobnego pobierania danych za pomocą API od razu mamy dostęp do całych zasobów przetrzymywanych na serwerze.
 
 //TODO Opisać react server component na podstawie tego źródła https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
