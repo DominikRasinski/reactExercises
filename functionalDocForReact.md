@@ -374,6 +374,17 @@ async function Note(props) {
 
 Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp do danych w serwerze bez potrzeby ich pobierania. Dlatego w komponencie serwerowym nie wykorzystujemy, żadnego fetchowana danych ani podobnego pobierania danych za pomocą API od razu mamy dostęp do całych zasobów przetrzymywanych na serwerze.
 
+#### Rzeczy jakie możną robić w React Serwer
+
+- używanie `async/await` z danymi w bazie danych, wewnętrznych serwisów, systemów plików itp.
+- renderowanie innych komponentów serwerowych, natywnych elementów takich jak `div` i inne elementy `html` lub **kliencki komponent**
+
+#### Rzeczy jakich się nie da zrobić w React Serwer
+
+- Nie ma możliwości użycia hooków jakie są dostarczane dzięki Reactowi takich jak `useState` itd. jako komponent serwerowy renderowanie odbywa się po stronie serwera
+- Nie ma możliwości używania API jako Local Storage dane pobierane za pomocą API można od razu uzupełnić za pomocą serwera
+- Nie ma możliwości używania funkcjonalności które bazują na przeglądarce lub custom hooks które są oparte na useState lub useEffect
+
 //TODO Opisać react server component na podstawie tego źródła https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
 ## Problemy
