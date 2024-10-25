@@ -387,6 +387,10 @@ Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp
 
 //TODO Opisać react server component na podstawie tego źródła https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
+## Hydracja
+
+Hydracja jest to dosyć ważnym mechanizmem wykorzystania [React Server Component](#react-server-components) ponieważ wy renderowany element po stronie serwera nie posiada, żadnej interaktywności ze względu na brak kodu JS oraz tego, że każdy element wy renderowany po stronie serwera jest czystym szkieletem HTML. Nadanie interaktywności komponentu jaki został wy renderowany po stronie serwera nazywamy Hydracją co można przedstawić analogicznie jako hipotetyczne nawadnianie JS'em suchego szkieletu komponentu jakim jest HTML.
+
 ## Problemy
 
 ### Stale state
