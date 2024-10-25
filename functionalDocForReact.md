@@ -385,6 +385,26 @@ Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp
 - Nie ma możliwości używania API jako Local Storage dane pobierane za pomocą API można od razu uzupełnić za pomocą serwera
 - Nie ma możliwości używania funkcjonalności które bazują na przeglądarce lub custom hooks które są oparte na useState lub useEffect
 
+#### Zasada importowania komponentów RSC & RCC
+
+**Komponent kliencki nie może importować komponentu serwerowego**
+
+Za to można robić takie kombinacje:
+1. **Dozwolone** jest importowanie komponentu klienckiego wewnątrz komponentu serwerowego
+2. **NIE** dozwolone jest importowanie serwerowego komponentu wewnątrz komponentu klienckiego
+3. **Dozwolone** jest przekazanie serwerowego komponentu jako dziecko do klienckiego komponentu wewnątrz komponentu serwerowego
+
+##### Przykład trzeciego punktu
+```TSX
+const ServerComponentA = () => {
+    return (
+        <ClientComponent>
+            <ServerComponentB />
+        </ClientComponent>
+    )
+}
+```
+
 //TODO Opisać react server component na podstawie tego źródła https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
 ## Hydracja
