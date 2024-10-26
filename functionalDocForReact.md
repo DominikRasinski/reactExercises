@@ -390,11 +390,13 @@ Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp
 **Komponent kliencki nie może importować komponentu serwerowego**
 
 Za to można robić takie kombinacje:
+
 1. **Dozwolone** jest importowanie komponentu klienckiego wewnątrz komponentu serwerowego
 2. **NIE** dozwolone jest importowanie serwerowego komponentu wewnątrz komponentu klienckiego
 3. **Dozwolone** jest przekazanie serwerowego komponentu jako dziecko do klienckiego komponentu wewnątrz komponentu serwerowego
 
 ##### Przykład trzeciego punktu
+
 ```TSX
 const ServerComponentA = () => {
     return (
@@ -404,6 +406,11 @@ const ServerComponentA = () => {
     )
 }
 ```
+
+#### Zaletami korzystania z RSC są:
+
+1. Automatyczne cięcie kodu, czyli serwerowy komponent wycina wszystkie nie potrzebne importy kodu, lub ładuje dodatkowe części kodu jako "lazy"
+2. Pozbycie efektu waterfall
 
 //TODO Opisać react server component na podstawie tego źródła https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
