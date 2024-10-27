@@ -412,11 +412,25 @@ const ServerComponentA = () => {
 1. Automatyczne cięcie kodu, czyli serwerowy komponent wycina wszystkie nie potrzebne importy kodu, lub ładuje dodatkowe części kodu jako "lazy"
 2. Pozbycie efektu waterfall
 
-//TODO Opisać react server component na podstawie tego źródła https://www.freecodecamp.org/news/react-server-components-for-beginners/
+Źródło: https://www.freecodecamp.org/news/react-server-components-for-beginners/
 
 ## Hydracja
 
 Hydracja jest to dosyć ważnym mechanizmem wykorzystania [React Server Component](#react-server-components) ponieważ wy renderowany element po stronie serwera nie posiada, żadnej interaktywności ze względu na brak kodu JS oraz tego, że każdy element wy renderowany po stronie serwera jest czystym szkieletem HTML. Nadanie interaktywności komponentu jaki został wy renderowany po stronie serwera nazywamy Hydracją co można przedstawić analogicznie jako hipotetyczne nawadnianie JS'em suchego szkieletu komponentu jakim jest HTML.
+
+### Częste błędy hydracji:
+
+Błąd hydracji może nastąpić w momencie gdy nasz element jaki renderujemy po stronie klienta nie zgadza się z elementem jaki został przekazany jako komponent serwerowy.
+
+1. Niepoprawne zagnieżdżenie znaczników HTML
+   1. `<p>` zagnieżdżone w kolejnym znaczniku `<p>`
+   2. `<div>` zagnieżdżony w znaczniku `<p>`
+   3. `<ul>` lub `<ol>` zagnieżdżone w znaczniku `<p>`
+   4. Interaktywne elementy nie mogą być zagnieżdżone w znaczniku `<a>`, `<button>`
+2. Używanie sprawdzania takiego jak `typeof window !== 'undefined'` w logice renderowania
+3. Rozszerzania przeglądarki modyfikujące strukturę `HTML`
+
+Więcej przykładów można znaleźć tutaj: https://nextjs.org/docs/messages/react-hydration-error
 
 ## Problemy
 
