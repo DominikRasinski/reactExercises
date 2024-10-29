@@ -92,40 +92,12 @@ Zapisany stan w hooku `useState` jest zapisywany w momencie renderowania kompone
 
 UseEffect jest uruchamiany dopiero po renderowaniu komponentu.
 
-UseEffect załącza się po wyświetleniu DOM w przeglądarce czyli po etapie paint browser
-Tablica zależności w jest bardzo ważnym elementem useEffect ponieważ dzięki niej udaje się zapanować nad momentem kiedy useEffect ma zostać odpalony, albo pozwala zaplanować kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
-
-### useRef
-
-`useRef` - jest hookiem który pozwala odwołać się do wartości która nie wymaga re-render'u całego komponentu w którym się znajduje.
-Dane jakie nie wymagają re-render'u całego komponentu to dane które **NIE** wpływają na wyświetlaną treść komponentu jak na przykład `id` wciśniętego przycisku przez użytkownika to jest typ danych które nie są potrzebne dla użytkownika, ale mogą być wykorzystywane w dalszej części aplikacji.
-
-```TSX
-const ButtonWithId = () => {
-  // definiowanie hook'a useRef wraz z wartością inicjowaną
-  const lastClickedButtonId = useRef(null);
-
-  // funkcja odpowiedzialna za obsługę kliknięcia przycisku
-  const handleClick = (id) => {
-    lastClickedButtonId.current = id;
-    console.log(`Button with ID ${id} clicked`);
-  };
-
-  return (
-    <div>
-      <button onClick={() => handleClick(1)}>Button 1</button>
-      <button onClick={() => handleClick(2)}>Button 2</button>
-      <button onClick={() => handleClick(3)}>Button 3</button>
-    </div>
-  );
-};
-```
-
+UseEffect załącza się po wyświetleniu DOM w przeglądarce, czyli po etapie paint browser
+Tablica zależności w jest bardzo ważnym elementem useEffect, ponieważ dzięki niej udaje się zapanować nad momentem, kiedy useEffect ma zostać odpalony, albo pozwala zaplanować, kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
 ---
-
 ### useReducer
 
-Hook useReducer jest bardo podobny do hooka `useState`, ale umożliwia przeniesienie logiki aktualizacji stanu do pojedynczej funkcji poza komponentem.
+Hook useReducer jest bardzo podobny do hooka `useState`, ale umożliwia przeniesienie logiki aktualizacji stanu do pojedynczej funkcji poza komponentem.
 Dzięki temu ułatwia zarządzanie bardziej skomplikowaną logiką stanu w porównaniu do prostych zmian stanu, które można łatwiej obsłużyć za pomocą `useState`
 
 #### Przykładowe użycie `useRecuder`
@@ -138,24 +110,12 @@ const [state, dispatch] = useReducer(reducer, initialState);
 
 - `state` - reprezentuje aktualnie przekazaną wartość do `useReducer` przyjmuje wartość inicjacyjną (`initialState`) podczas inicjacyjnego renderu
 - `dispatch` - jest to funkcja która odpowiada za logikę aktualizacji stanu oraz jest odpowiedzialna za wyzwolenie akcji `re-render` tak jak funkcja aktualizująca w `useState`
-- `reducer` - jest to funkcja która przechowuje całą logikę odpowiedzialną jak stan zostanie zaktualizowany. Przyjmuje jako argumenty `state` i `action` zwraca na ich podstawie kolejny stan.
+- `reducer` - jest to funkcja, która przechowuje całą logikę odpowiedzialną jak stan zostanie zaktualizowany. Przyjmuje jako argumenty `state` i `action` zwraca na ich podstawie kolejny stan.
 - `initialState` - przechowuje inicjacyjną wartość może być dowolnego typu(\*)
 
 (\*) dowolnego typu aplikuje się tylko dla aplikacji pisanych w JSX jeżeli będziemy pisać aplikację za pomocą TypeScript musimy ściśle o typować taką zmienną.
 
 https://www.freecodecamp.org/news/react-usereducer-hook/
-
----
-
-### useContext
-
-`useContext` to hook w React, który pozwala na korzystanie z kontekstu w funkcjonalnych komponentach. Kontekst w React służy do przekazywania danych przez drzewo komponentów bez konieczności ręcznego przekazywania propsów na każdym poziomie.
-
-Jak działa `useContext`:
-
-1. Tworzenie kontekstu: Najpierw tworzysz kontekst za pomocą React.createContext.
-1. Dostarczanie kontekstu: Następnie używasz komponentu Provider, aby dostarczyć wartość kontekstu do drzewa komponentów.
-1. Korzystanie z kontekstu: W końcu używasz hooka useContext, aby uzyskać dostęp do wartości kontekstu w dowolnym komponencie.
 
 ## Działanie hooka useReducer
 
@@ -170,7 +130,7 @@ Zwraca tablicę składającą się z dwóch elementów:
 1. `state`: reprezentuje bieżącą wartość stanu, ustawioną na wartość `initialState` podczas pierwszego renderowania
 2. `dispatch`: funkcja, które aktualizuje wartość stanu i zawsze wywołuje ponowny render, podobnie jak funkcja aktulizująca w `useState`
 
-```TSX
+```tsx
 import React, { useReducer } from 'react';
 // Definicja typów akcji
 const ActionTypes = {
@@ -209,6 +169,44 @@ function Counter() {
 
 export default Counter;
 ```
+---
+
+### useRef
+
+`useRef` - jest hookiem który pozwala odwołać się do wartości która nie wymaga re-render'u całego komponentu w którym się znajduje.
+Dane jakie nie wymagają re-render'u całego komponentu to dane które **NIE** wpływają na wyświetlaną treść komponentu jak na przykład `id` wciśniętego przycisku przez użytkownika to jest typ danych które nie są potrzebne dla użytkownika, ale mogą być wykorzystywane w dalszej części aplikacji.
+
+```tsx
+const ButtonWithId = () => {
+  // definiowanie hook'a useRef wraz z wartością inicjowaną
+  const lastClickedButtonId = useRef(null);
+
+  // funkcja odpowiedzialna za obsługę kliknięcia przycisku
+  const handleClick = (id) => {
+    lastClickedButtonId.current = id;
+    console.log(`Button with ID ${id} clicked`);
+  };
+
+  return (
+    <div>
+      <button onClick={() => handleClick(1)}>Button 1</button>
+      <button onClick={() => handleClick(2)}>Button 2</button>
+      <button onClick={() => handleClick(3)}>Button 3</button>
+    </div>
+  );
+};
+```
+---
+
+### useContext
+
+`useContext` to hook w React, który pozwala na korzystanie z kontekstu w funkcjonalnych komponentach. Kontekst w React służy do przekazywania danych przez drzewo komponentów bez konieczności ręcznego przekazywania propsów na każdym poziomie.
+
+Jak działa `useContext`:
+
+1. Tworzenie kontekstu: Najpierw tworzysz kontekst za pomocą React.createContext.
+1. Dostarczanie kontekstu: Następnie używasz komponentu Provider, aby dostarczyć wartość kontekstu do drzewa komponentów.
+1. Korzystanie z kontekstu: W końcu używasz hooka useContext, aby uzyskać dostęp do wartości kontekstu w dowolnym komponencie.
 
 ---
 
@@ -258,7 +256,7 @@ Zalecanym sposobem na przekazywanie danych pomiędzy większą ilością kompone
 Kompozycja komponentów polega na tym, że nie przekazujemy kolejnych parametrów za pomocą `props` a zamiast tego robimy kompozycję z innego komponentu.\
 Kompozycja polega na tym że przekazujemy jeden komponent do kolejnego jako dziecko używamy do tego `children` jako `ReactNode`
 
-```TSX
+```tsx
 const Button = ({ onClick, children }) => (
  <button onClick={onClick}>{children}</button>
 );
@@ -283,7 +281,7 @@ Technika odnośni się do tworzenia stanu komponentu, który jest tworzony na po
 
 Przykładowy kod wykorzystujący `Delivered State` ustawiony za pomocą dostarczonych **Props'ów**
 
-```TSX
+```tsx
 import React from 'react';
 
 function ItemList({ items }) {
@@ -317,7 +315,7 @@ Ciekawa lektura na temat komponentu jest zawarta tutaj: https://www.freecodecamp
 
 W streszczeniu serwerowe komponenty w React pozwalają nam na pozbycie się problemu jakim jest "waterfall" wystepujacy w zapytaniach o dane komponentu rodzica oraz jego dzieci.
 
-```TSX
+```tsx
 const App = () => {
     return (
         <Wrapper>
@@ -337,7 +335,7 @@ Załóżmy, że komponent `Wrapper` odpytuje API o dane `wrapperData.json` oraz 
 
 #### 1 wstrzykiwanie danych do komponentu jako props
 
-```TSX
+```tsx
 const App = () => {
 
     const data = fetchAllStuffs();
@@ -356,7 +354,7 @@ Wstrzykiwanie danych co prawda rozwiązuje zjawisko `waterfall` ale ma to do sie
 
 #### 2 Wykorzystanie React Server Component
 
-```TSX
+```tsx
 // Note.js - Server Component
 
 import NoteEditor from 'NoteEditor';
@@ -370,6 +368,7 @@ async function Note(props) {
       <section>{note.body}</section>
     </div>
   );
+  
 ```
 
 Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp do danych w serwerze bez potrzeby ich pobierania. Dlatego w komponencie serwerowym nie wykorzystujemy, żadnego fetchowana danych ani podobnego pobierania danych za pomocą API od razu mamy dostęp do całych zasobów przetrzymywanych na serwerze.
@@ -397,7 +396,7 @@ Za to można robić takie kombinacje:
 
 ##### Przykład trzeciego punktu
 
-```TSX
+```tsx
 const ServerComponentA = () => {
     return (
         <ClientComponent>
@@ -440,7 +439,7 @@ Więcej przykładów można znaleźć tutaj: https://nextjs.org/docs/messages/re
 
 Przykład problemu `stale state`
 
-```TSX
+```tsx
 import React, { useState } from 'react';
 
 function Counter() {
@@ -469,7 +468,7 @@ Rozwiązaniem problemu jest wykorzystanie funkcji aktualizującej stan, która p
 
 Przed:
 
-```TSX
+```tsx
   const handleClick = () => {
     setTimeout(() => {
       setCount(count + 1);
@@ -479,7 +478,7 @@ Przed:
 
 Po:
 
-```TSX
+```tsx
   const handleClick = () => {
     setTimeout(() => {
       setCount(prevCount => prevCount + 1); // użycie funkcji aktualizującej
