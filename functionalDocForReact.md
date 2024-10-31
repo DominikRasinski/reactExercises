@@ -479,7 +479,7 @@ Przed:
 Po:
 
 ```tsx
-  const handleClick = () => {
+****  const handleClick = () => {
     setTimeout(() => {
       setCount(prevCount => prevCount + 1); // użycie funkcji aktualizującej
     }, 1000);
