@@ -1,5 +1,53 @@
 # Funkcjonalna dokumentacja React.js
 
+## Nowości React 19
+
+### Akcje
+
+Akcje z konwencji to funkcje, które wykorzystują asynchroniczne przejście.
+
+Przykładową akcją jaka została dodana jest nowy hook `useTransition`, który pozwala na obsłużenie stanu oczekującego
+
+```tsx
+// Using pending state from Actions
+function UpdateName({}) {
+  const [name, setName] = useState("");
+  const [error, setError] = useState(null);
+  const [isPending, startTransition] = useTransition();
+
+  const handleSubmit = () => {
+    startTransition(async () => {
+      const error = await updateName(name);
+      if (error) {
+        setError(error);
+        return;
+      }
+      redirect("/path");
+    });
+  };
+
+  return (
+    <div>
+      <input value={name} onChange={(event) => setName(event.target.value)} />
+      <button onClick={handleSubmit} disabled={isPending}>
+        Update
+      </button>
+      {error && <p>{error}</p>}
+    </div>
+  );
+}
+```
+
+To asynchroniczne przejście funkcji automatycznie ustawi stan `isPending` na stan `true` przekształcając rządania na rządania asynchroniczne, a po wykonaniu jakiegolwiek nowego przejścia typu submit lub innego rządania stan `isPending` zostanie automatycznie ustawiony na `false`.
+Takie działanie pozwala na zachowanie aktualnego stanu UI responsywnego i interaktywnego podczas zmian danych.
+
+Akcje automatycznie wykorzystują wysyłane dane:
+
+- **Pending state**: akcje dostarczają status oczekujący na początku nowego zapytania, a resetuje się atutomatycznie podczas wysłania ostatecznego stanu.
+- **Optimistic uppdates**: akcje wspierają nowy hook `useOptimistic` dzięki czemu użytkownik może zostać od razu poinformowany podczas wysyłania nowego rządania.
+- **Error handling**: akcje dostarczają obsługę błędów, dzięki którym można wyświetlić informacje na temat błędów gdy zapytanie skończy się błędem, automatycznie zostanie obsłużona akcja cofnięcia `optimistic updates` do orginalnej wartości.
+- **Form**: `<form>` elementy teraz wspierają przekazywanie funkcji do `action` oraz `formAction` prop. Przekazywanie funkcji do `action` prop używa akcji domyślnie oraz resetuje formularz atutomatycznie po akcji `submit`.
+
 ## Słownik
 
 **Odwołanie** - w programowaniu pozwala nam na interakcje z wartościami przechowywanymi w pamięci komputera, mechanizm odwołania upraszcza składnie języka pozwalając nam na "przechowywanie" wartości w bardziej zrozumiałym dla człowieka języku. W innym przypadku musielibyśmy dostawać się do wartości poprzez podawanie jej adresu komórki pamięci.</br>
@@ -94,7 +142,9 @@ UseEffect jest uruchamiany dopiero po renderowaniu komponentu.
 
 UseEffect załącza się po wyświetleniu DOM w przeglądarce, czyli po etapie paint browser
 Tablica zależności w jest bardzo ważnym elementem useEffect, ponieważ dzięki niej udaje się zapanować nad momentem, kiedy useEffect ma zostać odpalony, albo pozwala zaplanować, kiedy dane pobranie danych ma zostać wykonane. "Kiedy" oznacza moment zaktualizowania danej zamiennej albo stanu w komponencie.
+
 ---
+
 ### useReducer
 
 Hook useReducer jest bardzo podobny do hooka `useState`, ale umożliwia przeniesienie logiki aktualizacji stanu do pojedynczej funkcji poza komponentem.
@@ -131,12 +181,12 @@ Zwraca tablicę składającą się z dwóch elementów:
 2. `dispatch`: funkcja, które aktualizuje wartość stanu i zawsze wywołuje ponowny render, podobnie jak funkcja aktulizująca w `useState`
 
 ```tsx
-import React, { useReducer } from 'react';
+import React, { useReducer } from "react";
 // Definicja typów akcji
 const ActionTypes = {
-  INCREMENT: 'increment',
-  DECREMENT: 'decrement',
-  RESET: 'reset',
+  INCREMENT: "increment",
+  DECREMENT: "decrement",
+  RESET: "reset",
 };
 
 // Reducer
@@ -160,8 +210,12 @@ function Counter() {
   return (
     <div>
       Licznik: {state.count}
-      <button onClick={() => dispatch({ type: ActionTypes.INCREMENT })}>Zwiększ</button>
-      <button onClick={() => dispatch({ type: ActionTypes.DECREMENT })}>Zmniejsz</button>
+      <button onClick={() => dispatch({ type: ActionTypes.INCREMENT })}>
+        Zwiększ
+      </button>
+      <button onClick={() => dispatch({ type: ActionTypes.DECREMENT })}>
+        Zmniejsz
+      </button>
       <button onClick={() => dispatch({ type: ActionTypes.RESET })}>Resetuj</button>
     </div>
   );
@@ -169,6 +223,7 @@ function Counter() {
 
 export default Counter;
 ```
+
 ---
 
 ### useRef
@@ -196,6 +251,7 @@ const ButtonWithId = () => {
   );
 };
 ```
+
 ---
 
 ### useContext
@@ -258,15 +314,13 @@ Kompozycja polega na tym że przekazujemy jeden komponent do kolejnego jako dzie
 
 ```tsx
 const Button = ({ onClick, children }) => (
- <button onClick={onClick}>{children}</button>
+  <button onClick={onClick}>{children}</button>
 );
 
 const App = () => {
-  const onClick = () => alert('Hey 👋');
+  const onClick = () => alert("Hey 👋");
 
-  return (
-    <Button onClick={onClick}>Click me!</Button>
-  );
+  return <Button onClick={onClick}>Click me!</Button>;
 };
 ```
 
@@ -282,7 +336,7 @@ Technika odnośni się do tworzenia stanu komponentu, który jest tworzony na po
 Przykładowy kod wykorzystujący `Delivered State` ustawiony za pomocą dostarczonych **Props'ów**
 
 ```tsx
-import React from 'react';
+import React from "react";
 
 function ItemList({ items }) {
   // Derived state: liczba elementów
@@ -317,13 +371,13 @@ W streszczeniu serwerowe komponenty w React pozwalają nam na pozbycie się prob
 
 ```tsx
 const App = () => {
-    return (
-        <Wrapper>
-            <ComponentA />
-            <ComponentB />
-        </Wrapper>
-    )
-}
+  return (
+    <Wrapper>
+      <ComponentA />
+      <ComponentB />
+    </Wrapper>
+  );
+};
 ```
 
 Załóżmy, że komponent `Wrapper` odpytuje API o dane `wrapperData.json` oraz jego dzieci `ComponentA` i `ComponentB` następująco odpytują API od ane `componentAData.json`, `componentBData.json` w takim przypadku jeżeli komponent będzie renderowany na poziomie klienta nastąpi zjawisko `waterfall` czyli aby komponent `Wrapper` został w renderowany musimy poczekać na wszystkie zapytania idąc w dół czyli gdy zakończą odpytywać API wszystkie jego dzieci, w tym przykładzie `ComponentA` oraz `ComponentB`, zakładając że każde zapytanie zajmuje komponentowi 1 sekundę to kończymy z winkiem 3 sekund zanim ujrzymy komponent `Wrapper` wraz z jego dziećmi.
@@ -337,17 +391,15 @@ Załóżmy, że komponent `Wrapper` odpytuje API o dane `wrapperData.json` oraz 
 
 ```tsx
 const App = () => {
+  const data = fetchAllStuffs();
 
-    const data = fetchAllStuffs();
-
-    return (
-        <Wrapper data={data.wrapperData}>
-            <ComponentA data={data.componentAData} />
-            <ComponentB data={data.componentBData} />
-        </Wrapper>
-    )
-}
-
+  return (
+    <Wrapper data={data.wrapperData}>
+      <ComponentA data={data.componentAData} />
+      <ComponentB data={data.componentBData} />
+    </Wrapper>
+  );
+};
 ```
 
 Wstrzykiwanie danych co prawda rozwiązuje zjawisko `waterfall` ale ma to do siebie, że jest trudniejsze w utrzymaniu gdy aplikacja się rozrasta może ulec zmianie implementacja danych, backend może przestać wystawiać dane itp... to wszystko przekłada się na późniejsze sprzątanie kodu.
@@ -368,7 +420,7 @@ async function Note(props) {
       <section>{note.body}</section>
     </div>
   );
-  
+
 ```
 
 Komponent serwerowy ma taką przewagę nad klienckim komponentem, że ma dostęp do danych w serwerze bez potrzeby ich pobierania. Dlatego w komponencie serwerowym nie wykorzystujemy, żadnego fetchowana danych ani podobnego pobierania danych za pomocą API od razu mamy dostęp do całych zasobów przetrzymywanych na serwerze.
@@ -398,12 +450,12 @@ Za to można robić takie kombinacje:
 
 ```tsx
 const ServerComponentA = () => {
-    return (
-        <ClientComponent>
-            <ServerComponentB />
-        </ClientComponent>
-    )
-}
+  return (
+    <ClientComponent>
+      <ServerComponentB />
+    </ClientComponent>
+  );
+};
 ```
 
 #### Zaletami korzystania z RSC są:
@@ -440,7 +492,7 @@ Więcej przykładów można znaleźć tutaj: https://nextjs.org/docs/messages/re
 Przykład problemu `stale state`
 
 ```tsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -469,19 +521,19 @@ Rozwiązaniem problemu jest wykorzystanie funkcji aktualizującej stan, która p
 Przed:
 
 ```tsx
-  const handleClick = () => {
-    setTimeout(() => {
-      setCount(count + 1);
-    }, 1000);
-  };
+const handleClick = () => {
+  setTimeout(() => {
+    setCount(count + 1);
+  }, 1000);
+};
 ```
 
 Po:
 
 ```tsx
 const handleClick = () => {
-    setTimeout(() => {
-      setCount(prevCount => prevCount + 1); // użycie funkcji aktualizującej
-    }, 1000);
-  };
+  setTimeout(() => {
+    setCount((prevCount) => prevCount + 1); // użycie funkcji aktualizującej
+  }, 1000);
+};
 ```
