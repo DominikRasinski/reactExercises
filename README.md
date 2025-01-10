@@ -12,8 +12,9 @@ Repozytorium zawiera ćwiczenia które pozwalają mi zrozumieć o wiele lepiej d
 
 # Dokumentacja
 
-- [Dokumentacja funkcjonalna](./functionalDocForReact.md)
-- [Dokumentacja wewnętrznych mechanizmów](./reactInside.md)
+Dokumentacja została przeniesiona do osobnego repozytorium aby utrzymać lepszy porządek
+
+Link do nowego miejsca gzie jest przetrzymywana dokumentacja https://github.com/DominikRasinski/reactDocumentation
 
 # Trouble shooting
 
