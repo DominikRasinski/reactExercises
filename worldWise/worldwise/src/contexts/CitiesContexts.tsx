@@ -9,6 +9,7 @@ interface CitiesContextType {
     emoji?: string;
     date?: string;
     notes?: string;
+    id?: string;
   };
   getCity: (id: string) => void;
 }

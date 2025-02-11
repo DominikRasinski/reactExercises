@@ -28,8 +28,8 @@ export type City = {
 
 export function App() {
   return (
-    <CitiesProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <CitiesProvider>
         <Routes>
           <Route index element={<Homepage />} />
           <Route path="/products" element={<Product />} />
@@ -45,7 +45,7 @@ export function App() {
           </Route>
           <Route path="/login" element={<Login />} />
         </Routes>
-      </BrowserRouter>
-    </CitiesProvider>
+      </CitiesProvider>
+    </BrowserRouter>
   );
 }

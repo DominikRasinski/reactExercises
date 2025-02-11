@@ -11,21 +11,24 @@
     "server": "json-server --watch data/cities.json --port 8000"
   },
   "dependencies": {
-    "json-server": "^1.0.0-beta.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.26.1"
+    "json-server": "^1.0.0-beta.3",
+    "leaflet": "^1.9.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.1.5"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
-    "@vitejs/plugin-react": "^4.0.3",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@types/react-leaflet": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.20.1",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
   }
 }
