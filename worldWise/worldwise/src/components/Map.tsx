@@ -7,17 +7,16 @@ import { useCities } from "../contexts/CitiesContexts";
 import { LatLngExpression } from "leaflet";
 import { useGeolocation } from "../customHooks/useGeolocation";
 import { Button } from "./Button";
+import { useUrlPosition } from "../customHooks/useUrlPosition";
 
 export const Map = () => {
   const {cities} = useCities(); 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [mapLat, mapLng] = useUrlPosition();
   const {
     position: geoLocationPosition,
     isLoading: geoLocationLoading,
     getPosition,
   } = useGeolocation({ defaultPosition: undefined });
-  const mapLat = Number(searchParams.get("lat"));
-  const mapLng = Number(searchParams.get("lng"));
 
   const [mapPosition, setMapPosition] = useState<[number, number]>([0,40]);
 
@@ -26,8 +25,6 @@ export const Map = () => {
       setMapPosition([mapLat, mapLng]);
     }
   }, [mapLat, mapLng])
-
-  console.log(geoLocationPosition.lat);
 
   useEffect(() => {
     if(geoLocationPosition) {

@@ -12,6 +12,8 @@ interface CitiesContextType {
     id?: string;
   };
   getCity: (id: string) => void;
+  createCity: (newCity: Omit<City, 'id'>) => void;
+  deleteCity: (id: string) => void;
 }
 
 const CitiesContext = createContext<CitiesContextType>({
@@ -19,6 +21,8 @@ const CitiesContext = createContext<CitiesContextType>({
   isLoading: false,
   currentCity: {},
   getCity: () => {},
+  createCity: () => {},
+  deleteCity: () => {},
 });
 
 export function CitiesProvider({ children }: any) {
@@ -26,11 +30,13 @@ export function CitiesProvider({ children }: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [currentCity, setCurrentCity] = useState({});
 
+  const BASE_URL = "http://localhost:8000";
+
   useEffect(() => {
     async function fetchCities() {
       try {
         setIsLoading(true);
-        const res = await fetch("http://localhost:8000/cities");
+        const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
         setCities(data);
       } catch (error) {
@@ -45,7 +51,7 @@ export function CitiesProvider({ children }: any) {
   async function getCity(id: string) {
     try {
       setIsLoading(true);
-      const res = await fetch("http://localhost:8000/cities/" + id);
+      const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
       setCurrentCity(data);
     } catch (error) {
@@ -55,8 +61,45 @@ export function CitiesProvider({ children }: any) {
     }
   }
 
+  async function createCity(newCity: Omit<City, 'id'>) {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: 'POST',
+        body: JSON.stringify(newCity),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+
+      setCities(cities => [...cities, data])
+
+      console.log(data);  
+    } catch (err){
+      alert(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function deleteCity(id: string) {
+    try {
+     await fetch(`${BASE_URL}/cities/${id}`, {
+        method: 'DELETE',
+      })
+
+      setCities((cities) => cities.filter((city) => city.id !== id))
+
+    } catch (err) {
+      alert(err);
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, isLoading, currentCity, getCity }}>
+    <CitiesContext.Provider value={{ cities, isLoading, currentCity, getCity, createCity, deleteCity }}>
       {children}
     </CitiesContext.Provider>
   );
