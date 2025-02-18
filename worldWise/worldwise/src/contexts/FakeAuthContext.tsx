@@ -1,14 +1,25 @@
-import { Children, createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
+const FAKE_USER = {
+    name: "Jack",
+    email: "jack@example.com",
+    password: "qwerty",
+    avatar: "https://i.pravatar.cc/100?u=zz",
+};
 interface AuthContextType {
-    user: {} | null,
+    user: {
+        name: string,
+        email: string,
+        password: string,
+        avatar: string, 
+    } | null,
     isAuthenticated: boolean,
     login: (email: string, password: string) => void,
     logout: () => void,
 }
 
 const AuthContext = createContext<AuthContextType>({
-    user: null,
+    user: FAKE_USER,
     isAuthenticated: false,
     login: () => {},
     logout: () => {},
@@ -18,13 +29,6 @@ const initialState = {
     user: null,
     isAuthenticated: false,
 }
-
-const FAKE_USER = {
-    name: "Jack",
-    email: "jack@example.com",
-    password: "qwerty",
-    avatar: "https://i.pravatar.cc/100?u=zz",
-};
 
 function reducer(state: any, action: any) { 
     switch(action.type) {
@@ -57,6 +61,7 @@ const useAuth = () => {
     if(context === undefined) {
         throw new Error("Context was used outside AuthProvider")
     }
+    return context;
 }
 
 export {AuthProvider, useAuth};

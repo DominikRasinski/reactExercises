@@ -11,6 +11,8 @@ import { CountriesList } from "./components/CountriesList";
 import City from "./components/City";
 import Form from "./components/Form";
 import { CitiesProvider } from "./contexts/CitiesContexts";
+import { AuthProvider } from "./contexts/FakeAuthContext";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export type City = {
   cityName: string;
@@ -28,23 +30,32 @@ export type City = {
 export function App() {
   return (
     <BrowserRouter>
-      <CitiesProvider>
-        <Routes>
-          <Route index element={<Homepage />} />
-          <Route path="/products" element={<Product />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="cities" />} />
-            <Route path="cities" element={<CityList />} />
-            <Route path="cities/:id" element={<City />} />
-            <Route path="countries" element={<CountriesList />} />
-            <Route path="countries" element={<p>List of countries</p>} />
-            <Route path="form" element={<Form />} />
-          </Route>
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </CitiesProvider>
+      <AuthProvider>
+        <CitiesProvider>
+          <Routes>
+            <Route index element={<Homepage />} />
+            <Route path="/products" element={<Product />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="*" element={<PageNotFound />} />
+            <Route
+              path="app"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate replace to="cities" />} />
+              <Route path="cities" element={<CityList />} />
+              <Route path="cities/:id" element={<City />} />
+              <Route path="countries" element={<CountriesList />} />
+              <Route path="countries" element={<p>List of countries</p>} />
+              <Route path="form" element={<Form />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </CitiesProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
